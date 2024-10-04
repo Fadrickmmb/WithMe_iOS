@@ -9,7 +9,13 @@ import SwiftUI
 
 struct TabView_WithMe: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        TabView{
+            User_HomePage().tabItem{ Image(systemName: "house") }
+            User_SearchPage().tabItem{ Image(systemName: "magnifyingglass") }
+            User_AddPostPage().tabItem{ Image(systemName: "plus") }
+            User_ProfilePage().tabItem{ Image(systemName: "person") }
+            
+        }.accentColor(.black)
     }
 }
 
