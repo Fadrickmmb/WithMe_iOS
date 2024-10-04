@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		378429162CA711030048F45B /* User_HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378429152CA711030048F45B /* User_HomePage.swift */; };
+		378429182CA71B8F0048F45B /* TabView_WithMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378429172CA71B8F0048F45B /* TabView_WithMe.swift */; };
+		3784291A2CA71C8C0048F45B /* User_AddPostPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378429192CA71C8C0048F45B /* User_AddPostPage.swift */; };
+		3784291C2CA71C9D0048F45B /* User_EditProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3784291B2CA71C9D0048F45B /* User_EditProfilePage.swift */; };
+		3784291E2CA71CB50048F45B /* User_PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3784291D2CA71CB50048F45B /* User_PostView.swift */; };
+		378429202CA71CCA0048F45B /* User_ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3784291F2CA71CCA0048F45B /* User_ProfilePage.swift */; };
+		378429222CA71CE20048F45B /* User_SearchPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378429212CA71CE20048F45B /* User_SearchPage.swift */; };
+		378429242CA71D000048F45B /* User_ViewProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378429232CA71D000048F45B /* User_ViewProfile.swift */; };
+		3784292E2CA729080048F45B /* DMSerifDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3784292D2CA729080048F45B /* DMSerifDisplay-Regular.ttf */; };
+		3784292F2CA729080048F45B /* DMSerifDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3784292D2CA729080048F45B /* DMSerifDisplay-Regular.ttf */; };
+		378429302CA729080048F45B /* DMSerifDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3784292D2CA729080048F45B /* DMSerifDisplay-Regular.ttf */; };
 		D3516ED52CA0A2E00027948F /* WithMe_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3516ED42CA0A2E00027948F /* WithMe_iOSApp.swift */; };
 		D3516ED72CA0A2E00027948F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3516ED62CA0A2E00027948F /* ContentView.swift */; };
 		D3516ED92CA0A2E30027948F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3516ED82CA0A2E30027948F /* Assets.xcassets */; };
@@ -34,6 +45,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		378429152CA711030048F45B /* User_HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User_HomePage.swift; sourceTree = "<group>"; };
+		378429172CA71B8F0048F45B /* TabView_WithMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView_WithMe.swift; sourceTree = "<group>"; };
+		378429192CA71C8C0048F45B /* User_AddPostPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User_AddPostPage.swift; sourceTree = "<group>"; };
+		3784291B2CA71C9D0048F45B /* User_EditProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User_EditProfilePage.swift; sourceTree = "<group>"; };
+		3784291D2CA71CB50048F45B /* User_PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User_PostView.swift; sourceTree = "<group>"; };
+		3784291F2CA71CCA0048F45B /* User_ProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User_ProfilePage.swift; sourceTree = "<group>"; };
+		378429212CA71CE20048F45B /* User_SearchPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User_SearchPage.swift; sourceTree = "<group>"; };
+		378429232CA71D000048F45B /* User_ViewProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User_ViewProfile.swift; sourceTree = "<group>"; };
+		3784292D2CA729080048F45B /* DMSerifDisplay-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DMSerifDisplay-Regular.ttf"; sourceTree = "<group>"; };
+		378429312CA72D6C0048F45B /* WithMe-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "WithMe-iOS-Info.plist"; sourceTree = SOURCE_ROOT; };
 		D3516ED12CA0A2E00027948F /* WithMe_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WithMe_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3516ED42CA0A2E00027948F /* WithMe_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithMe_iOSApp.swift; sourceTree = "<group>"; };
 		D3516ED62CA0A2E00027948F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -71,6 +92,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3784292C2CA728D60048F45B /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				3784292D2CA729080048F45B /* DMSerifDisplay-Regular.ttf */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
 		D3516EC82CA0A2DF0027948F = {
 			isa = PBXGroup;
 			children = (
@@ -94,10 +123,20 @@
 		D3516ED32CA0A2E00027948F /* WithMe_iOS */ = {
 			isa = PBXGroup;
 			children = (
+				378429312CA72D6C0048F45B /* WithMe-iOS-Info.plist */,
+				3784292C2CA728D60048F45B /* Font */,
+				3784291F2CA71CCA0048F45B /* User_ProfilePage.swift */,
 				D3516ED42CA0A2E00027948F /* WithMe_iOSApp.swift */,
 				D3516ED62CA0A2E00027948F /* ContentView.swift */,
 				D3516ED82CA0A2E30027948F /* Assets.xcassets */,
 				D3516EDA2CA0A2E30027948F /* Preview Content */,
+				378429152CA711030048F45B /* User_HomePage.swift */,
+				378429172CA71B8F0048F45B /* TabView_WithMe.swift */,
+				378429192CA71C8C0048F45B /* User_AddPostPage.swift */,
+				3784291B2CA71C9D0048F45B /* User_EditProfilePage.swift */,
+				3784291D2CA71CB50048F45B /* User_PostView.swift */,
+				378429212CA71CE20048F45B /* User_SearchPage.swift */,
+				378429232CA71D000048F45B /* User_ViewProfile.swift */,
 			);
 			path = WithMe_iOS;
 			sourceTree = "<group>";
@@ -233,6 +272,7 @@
 			files = (
 				D3516EDC2CA0A2E30027948F /* Preview Assets.xcassets in Resources */,
 				D3516ED92CA0A2E30027948F /* Assets.xcassets in Resources */,
+				3784292E2CA729080048F45B /* DMSerifDisplay-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,6 +280,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3784292F2CA729080048F45B /* DMSerifDisplay-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,6 +288,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				378429302CA729080048F45B /* DMSerifDisplay-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,8 +299,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3784291A2CA71C8C0048F45B /* User_AddPostPage.swift in Sources */,
 				D3516ED72CA0A2E00027948F /* ContentView.swift in Sources */,
+				378429162CA711030048F45B /* User_HomePage.swift in Sources */,
+				378429182CA71B8F0048F45B /* TabView_WithMe.swift in Sources */,
 				D3516ED52CA0A2E00027948F /* WithMe_iOSApp.swift in Sources */,
+				378429222CA71CE20048F45B /* User_SearchPage.swift in Sources */,
+				378429202CA71CCA0048F45B /* User_ProfilePage.swift in Sources */,
+				378429242CA71D000048F45B /* User_ViewProfile.swift in Sources */,
+				3784291C2CA71C9D0048F45B /* User_EditProfilePage.swift in Sources */,
+				3784291E2CA71CB50048F45B /* User_PostView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,9 +472,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"WithMe_iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = W5W5AZSUAZ;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "WithMe-iOS-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -451,9 +502,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"WithMe_iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = W5W5AZSUAZ;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "WithMe-iOS-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
