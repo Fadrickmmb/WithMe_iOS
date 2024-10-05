@@ -11,34 +11,35 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Image(systemName: "globe")
-                    .imageScale(.large)
-                    .foregroundStyle(.tint)
-                Text("Hello, world!")
+                
+                Image("withme_launcher")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(height: 530)
+                    .clipped()
                 
                 NavigationLink(destination: Auth_LoginView()) {
                     Text("Login")
+                        .font(.system(size: 16, weight: .bold))
+                        .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.blue)
+                        .background(Color(red: 0.1, green: 0.18, blue: 0.19))
                         .foregroundColor(.white)
                         .cornerRadius(10)
+                        .padding(.top, 20)
                 }
-                .padding(.top)
-
+                .frame(width: UIScreen.main.bounds.width * 0.4)
+                
                 NavigationLink(destination: Auth_RegisterView()) {
-                    Text("Register")
-                        .padding()
-                        .background(Color.green)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                    Text("Create an Account")
+                        .font(.system(size: 16))
+                        .padding(.top, 10)
                 }
-                .padding(.top)
             }
             .padding()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.white)
         }
     }
 }
 
-//#Preview {
-//    ContentView()
-//}
