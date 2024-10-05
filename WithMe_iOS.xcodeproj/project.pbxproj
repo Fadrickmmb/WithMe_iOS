@@ -17,6 +17,11 @@
 		D3516F072CA894620027948F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D3516F062CA894620027948F /* FirebaseAuth */; };
 		D3516F092CA894620027948F /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = D3516F082CA894620027948F /* FirebaseDatabase */; };
 		D3516F0B2CA894620027948F /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = D3516F0A2CA894620027948F /* FirebaseStorage */; };
+		D9B001332CAFA36700ED9ED3 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B001322CAFA36700ED9ED3 /* EditProfileView.swift */; };
+		D9B001382CAFA3DD00ED9ED3 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B001352CAFA3DC00ED9ED3 /* ImagePicker.swift */; };
+		D9B001392CAFA3DD00ED9ED3 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B001362CAFA3DC00ED9ED3 /* TabBar.swift */; };
+		D9B0013A2CAFA3DD00ED9ED3 /* TopNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B001372CAFA3DC00ED9ED3 /* TopNavigationView.swift */; };
+		D9B0013C2CAFA6C700ED9ED3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9B0013B2CAFA6C700ED9ED3 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +52,11 @@
 		D3516EEB2CA0A2E30027948F /* WithMe_iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WithMe_iOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3516EEF2CA0A2E30027948F /* WithMe_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithMe_iOSUITests.swift; sourceTree = "<group>"; };
 		D3516EF12CA0A2E30027948F /* WithMe_iOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithMe_iOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D9B001322CAFA36700ED9ED3 /* EditProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		D9B001352CAFA3DC00ED9ED3 /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		D9B001362CAFA3DC00ED9ED3 /* TabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		D9B001372CAFA3DC00ED9ED3 /* TopNavigationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopNavigationView.swift; sourceTree = "<group>"; };
+		D9B0013B2CAFA6C700ED9ED3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,9 +110,12 @@
 		D3516ED32CA0A2E00027948F /* WithMe_iOS */ = {
 			isa = PBXGroup;
 			children = (
+				D9B001342CAFA3D200ED9ED3 /* Utils */,
+				D9B001312CAFA35100ED9ED3 /* EditProfileView */,
 				D3516ED42CA0A2E00027948F /* WithMe_iOSApp.swift */,
 				D3516ED62CA0A2E00027948F /* ContentView.swift */,
 				D3516ED82CA0A2E30027948F /* Assets.xcassets */,
+				D9B0013B2CAFA6C700ED9ED3 /* GoogleService-Info.plist */,
 				D3516EDA2CA0A2E30027948F /* Preview Content */,
 			);
 			path = WithMe_iOS;
@@ -131,6 +144,24 @@
 				D3516EF12CA0A2E30027948F /* WithMe_iOSUITestsLaunchTests.swift */,
 			);
 			path = WithMe_iOSUITests;
+			sourceTree = "<group>";
+		};
+		D9B001312CAFA35100ED9ED3 /* EditProfileView */ = {
+			isa = PBXGroup;
+			children = (
+				D9B001322CAFA36700ED9ED3 /* EditProfileView.swift */,
+			);
+			path = EditProfileView;
+			sourceTree = "<group>";
+		};
+		D9B001342CAFA3D200ED9ED3 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				D9B001352CAFA3DC00ED9ED3 /* ImagePicker.swift */,
+				D9B001362CAFA3DC00ED9ED3 /* TabBar.swift */,
+				D9B001372CAFA3DC00ED9ED3 /* TopNavigationView.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -247,6 +278,7 @@
 			files = (
 				D3516EDC2CA0A2E30027948F /* Preview Assets.xcassets in Resources */,
 				D3516ED92CA0A2E30027948F /* Assets.xcassets in Resources */,
+				D9B0013C2CAFA6C700ED9ED3 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,8 +303,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9B001332CAFA36700ED9ED3 /* EditProfileView.swift in Sources */,
+				D9B001382CAFA3DD00ED9ED3 /* ImagePicker.swift in Sources */,
+				D9B0013A2CAFA3DD00ED9ED3 /* TopNavigationView.swift in Sources */,
 				D3516ED72CA0A2E00027948F /* ContentView.swift in Sources */,
 				D3516ED52CA0A2E00027948F /* WithMe_iOSApp.swift in Sources */,
+				D9B001392CAFA3DD00ED9ED3 /* TabBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

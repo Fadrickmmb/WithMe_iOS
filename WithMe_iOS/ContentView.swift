@@ -6,19 +6,25 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct ContentView: View {
+    
+    @State private var isAuthenticated = false
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        if isAuthenticated {
+            EditProfileView()
+        } else {
+            ProgressView("Logging in...") // Loading indicator while logging in
+                .onAppear {
+                   
+                    Auth.auth().addStateDidChangeListener { auth, user in
+                        if user != nil {
+                            isAuthenticated = true
+                        }
+                    }
+                }
         }
-        .padding()
     }
-}
-
-#Preview {
-    ContentView()
 }
