@@ -10,13 +10,14 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         NavigationView {
-            VStack {
+            VStack(spacing: 0) {
                 
                 Image("withme_launcher")
                     .resizable()
                     .scaledToFill()
-                    .frame(height: 530)
+                    .frame(width: UIScreen.main.bounds.width, height: 530)
                     .clipped()
+                    .edgesIgnoringSafeArea(.top)
                 
                 NavigationLink(destination: Auth_LoginView()) {
                     Text("Login")
