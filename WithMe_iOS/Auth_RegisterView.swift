@@ -17,30 +17,81 @@ struct Auth_RegisterView: View {
     @State private var errorMessage: String = ""
 
     var body: some View {
-        VStack(spacing: 20) {
-            TextField("Username", text: $username)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
+        VStack {
             
-            TextField("Email", text: $email)
+            Image("withme_logo")
+                .resizable()
+                .frame(width: 252, height: 92)
+                .padding(.top, 50)
+
+            
+            Text("Username")
+                .font(.system(size: 16))
+                .padding(.top, 20)
+            TextField("Enter your username", text: $username)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
+                .frame(height: 50)
+                .padding(.horizontal)
+
+            
+            Text("Email")
+                .font(.system(size: 16))
+                .padding(.top, 10)
+            TextField("Enter your email", text: $email)
                 .keyboardType(.emailAddress)
                 .autocapitalization(.none)
-
-            SecureField("Password", text: $password)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
+                .frame(height: 50)
+                .padding(.horizontal)
+
+           
+            Text("Password")
+                .font(.system(size: 16))
+                .padding(.top, 10)
+            SecureField("Enter your password", text: $password)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+                .frame(height: 50)
+                .padding(.horizontal)
+
             
-            Button("Register") {
+            Button(action: {
                 registerUser()
+            }) {
+                Text("Register")
+                    .foregroundColor(.black)
+                    .frame(maxWidth: .infinity, minHeight: 45)
+                    .background(Color.white)
+                    .cornerRadius(10)
+                    .padding(.horizontal, 50)
+                    .shadow(radius: 5)
             }
-            .padding()
+            .padding(.top, 20)
+            .padding(.horizontal)
+
             
             if showError {
                 Text(errorMessage)
                     .foregroundColor(.red)
+                    .padding(.top, 10)
             }
+
+            Spacer()
+
+            
+            Text("Do You Have an Account? \nSign In Here")
+                .font(.system(size: 16))
+                .multilineTextAlignment(.center)
+                .padding(.top, 20)
+
+            
+            Text("Forgot Password")
+                .foregroundColor(.blue)
+                .padding(.top, 10)
+
+            Spacer()
         }
         .padding()
     }
@@ -51,6 +102,7 @@ struct Auth_RegisterView: View {
             showError = true
             return
         }
+
         
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
@@ -58,11 +110,12 @@ struct Auth_RegisterView: View {
                 showError = true
                 return
             }
-            
+
             guard let user = authResult?.user else { return }
             let userId = user.uid
             let newUser = User(name: username, email: email, id: userId)
 
+            
             let dbRef = Database.database().reference().child("users").child(userId)
             do {
                 let data = try JSONEncoder().encode(newUser)
@@ -71,9 +124,6 @@ struct Auth_RegisterView: View {
                         if let error = error {
                             errorMessage = "Failed to save user data: \(error.localizedDescription)"
                             showError = true
-                        } else {
-                            // Successful registration and data saving
-                            // Navigate to the next view, e.g., HomePage
                         }
                     }
                 }
@@ -84,6 +134,7 @@ struct Auth_RegisterView: View {
         }
     }
 }
+
 
 #Preview {
     Auth_RegisterView()
