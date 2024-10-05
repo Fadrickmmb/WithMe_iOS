@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D31B24942CB0BA26001ADA55 /* User_HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31B24932CB0BA26001ADA55 /* User_HomeView.swift */; };
+		D31B24982CB0BBDD001ADA55 /* Admin_HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31B24972CB0BBDD001ADA55 /* Admin_HomeView.swift */; };
 		D3516ED52CA0A2E00027948F /* WithMe_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3516ED42CA0A2E00027948F /* WithMe_iOSApp.swift */; };
 		D3516ED72CA0A2E00027948F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3516ED62CA0A2E00027948F /* ContentView.swift */; };
 		D3516ED92CA0A2E30027948F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3516ED82CA0A2E30027948F /* Assets.xcassets */; };
@@ -20,6 +22,7 @@
 		D3C2C0992CB03D8F00BBB6C7 /* Auth_LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C2C0982CB03D8F00BBB6C7 /* Auth_LoginView.swift */; };
 		D3C2C09B2CB03DBB00BBB6C7 /* Auth_RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C2C09A2CB03DBB00BBB6C7 /* Auth_RegisterView.swift */; };
 		D3C2C09F2CB0425200BBB6C7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D3C2C09E2CB0425200BBB6C7 /* GoogleService-Info.plist */; };
+		D3C2C0A12CB045A900BBB6C7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C2C0A02CB045A900BBB6C7 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D31B24932CB0BA26001ADA55 /* User_HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User_HomeView.swift; sourceTree = "<group>"; };
+		D31B24972CB0BBDD001ADA55 /* Admin_HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Admin_HomeView.swift; sourceTree = "<group>"; };
 		D3516ED12CA0A2E00027948F /* WithMe_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WithMe_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3516ED42CA0A2E00027948F /* WithMe_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithMe_iOSApp.swift; sourceTree = "<group>"; };
 		D3516ED62CA0A2E00027948F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,6 +58,7 @@
 		D3C2C0982CB03D8F00BBB6C7 /* Auth_LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth_LoginView.swift; sourceTree = "<group>"; };
 		D3C2C09A2CB03DBB00BBB6C7 /* Auth_RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth_RegisterView.swift; sourceTree = "<group>"; };
 		D3C2C09E2CB0425200BBB6C7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D3C2C0A02CB045A900BBB6C7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +119,9 @@
 				D3516EDA2CA0A2E30027948F /* Preview Content */,
 				D3C2C0982CB03D8F00BBB6C7 /* Auth_LoginView.swift */,
 				D3C2C09A2CB03DBB00BBB6C7 /* Auth_RegisterView.swift */,
+				D3C2C0A02CB045A900BBB6C7 /* User.swift */,
+				D31B24932CB0BA26001ADA55 /* User_HomeView.swift */,
+				D31B24972CB0BBDD001ADA55 /* Admin_HomeView.swift */,
 			);
 			path = WithMe_iOS;
 			sourceTree = "<group>";
@@ -281,10 +290,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D31B24942CB0BA26001ADA55 /* User_HomeView.swift in Sources */,
 				D3516ED72CA0A2E00027948F /* ContentView.swift in Sources */,
 				D3C2C0992CB03D8F00BBB6C7 /* Auth_LoginView.swift in Sources */,
 				D3516ED52CA0A2E00027948F /* WithMe_iOSApp.swift in Sources */,
+				D3C2C0A12CB045A900BBB6C7 /* User.swift in Sources */,
 				D3C2C09B2CB03DBB00BBB6C7 /* Auth_RegisterView.swift in Sources */,
+				D31B24982CB0BBDD001ADA55 /* Admin_HomeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
