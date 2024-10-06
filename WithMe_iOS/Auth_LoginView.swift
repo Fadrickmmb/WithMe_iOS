@@ -7,17 +7,20 @@
 
 import SwiftUI
 import FirebaseAuth
+import FirebaseDatabase
 
 struct Auth_LoginView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var isLoggedIn: Bool = false
     @State private var loginError: String?
+    @State private var isAdmin: Bool = false
+    @State private var navigateToAdmin: Bool = false
+    @State private var navigateToUser: Bool = false
 
     var body: some View {
         NavigationView {
             VStack {
-              
                 Image("withme_logo")
                     .resizable()
                     .frame(width: 252, height: 92)
@@ -26,7 +29,6 @@ struct Auth_LoginView: View {
                 Text("Email")
                     .font(.system(size: 14))
                     .padding(.top, 20)
-
 
                 TextField("Enter your email", text: $email)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -40,14 +42,12 @@ struct Auth_LoginView: View {
                     .font(.system(size: 14))
                     .padding(.top, 20)
 
-                
                 SecureField("Enter your password", text: $password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal, 50)
                     .padding(.vertical, 10)
                     .cornerRadius(5)
 
-            
                 Text("Forgot Password?")
                     .foregroundColor(.blue)
                     .font(.system(size: 14))
@@ -55,7 +55,6 @@ struct Auth_LoginView: View {
                     .onTapGesture {
                         
                     }
-
 
                 Button(action: loginUser) {
                     Text("Login")
@@ -76,7 +75,6 @@ struct Auth_LoginView: View {
                         .padding(.horizontal, 50)
                 }
 
-                
                 Text("Don't Have an Account?\nRegister Here")
                     .multilineTextAlignment(.center)
                     .foregroundColor(.blue)
@@ -86,7 +84,11 @@ struct Auth_LoginView: View {
                         
                     }
 
-                NavigationLink(destination: User_HomePage(), isActive: $isLoggedIn) {
+               
+                NavigationLink(destination: Admin_HomePage(), isActive: $navigateToAdmin) {
+                    EmptyView()
+                }
+                NavigationLink(destination: User_HomePage(), isActive: $navigateToUser) {
                     EmptyView()
                 }
             }
@@ -98,7 +100,26 @@ struct Auth_LoginView: View {
             if let error = error {
                 loginError = "Failed to login: \(error.localizedDescription)"
             } else {
-                isLoggedIn = true
+                checkUserRole()
+            }
+        }
+    }
+
+    
+    func checkUserRole() {
+        let dbRef = Database.database().reference()
+
+        dbRef.child("admin").queryOrdered(byChild: "email").queryEqual(toValue: email).observeSingleEvent(of: .value) { snapshot in
+            if snapshot.exists() {
+                navigateToAdmin = true
+            } else {
+                dbRef.child("users").queryOrdered(byChild: "email").queryEqual(toValue: email).observeSingleEvent(of: .value) { snapshot in
+                    if snapshot.exists() {
+                        navigateToUser = true
+                    } else {
+                        loginError = "User not found"
+                    }
+                }
             }
         }
     }
