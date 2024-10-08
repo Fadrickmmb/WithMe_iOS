@@ -83,6 +83,7 @@ struct Auth_LoginView: View {
                         .foregroundColor(.blue)
                         .padding(.top, 10)
                 }
+                .navigationBarBackButtonHidden(true)
                 
                 Spacer()
 
