@@ -49,14 +49,11 @@ struct Auth_LoginView: View {
                     .padding(.vertical, 10)
                     .cornerRadius(5)
 
-                Text("Forgot Password?")
-                    .foregroundColor(.blue)
-                    .font(.system(size: 14))
-                    .padding(.top, 10)
-                    .onTapGesture {
-                        
-                    }
-
+                NavigationLink(destination: Auth_ForgotPasswordView()) {
+                                    Text("Forgot Pasword?")
+                                        .font(.system(size: 16))
+                                        .padding(.top, 10)
+                                }
                 Button(action: loginUser) {
                     Text("Login")
                         .foregroundColor(.black)
@@ -76,16 +73,16 @@ struct Auth_LoginView: View {
                         .padding(.horizontal, 50)
                 }
 
-                Text("Don't Have an Account?\nRegister Here")
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.blue)
-                    .font(.system(size: 14))
-                    .padding(.top, 20)
-                    .onTapGesture {
-                        
-                    }
-
-               
+                NavigationLink(destination: Auth_RegisterView()) {
+                                    Text("Don't Have an Account?\nRegister Here")
+                                        .multilineTextAlignment(.center)
+                                        .font(.system(size: 14))
+                                        .foregroundColor(.blue)
+                                        .padding(.top, 10)
+                                }
+                
+                Spacer()
+                
                 NavigationLink(destination: Admin_HomePage(), isActive: $navigateToAdmin) {
                     EmptyView()
                 }

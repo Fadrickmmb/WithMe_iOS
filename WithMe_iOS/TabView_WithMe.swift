@@ -14,7 +14,7 @@ struct TabView_WithMe: View {
     var body: some View {
         TabView{
             User_HomePage().tabItem{ Image(systemName: "house") }
-            User_SearchPage().tabItem{ Image(systemName: "magnifyingglass") }
+            User_Search().tabItem{ Image(systemName: "magnifyingglass") }
             User_AddPostPage().tabItem{ Image(systemName: "plus") }
             if user_ViewModel.user != nil {
                 User_ProfilePage(userId: userId)
