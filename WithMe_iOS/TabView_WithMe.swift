@@ -8,17 +8,32 @@
 import SwiftUI
 
 struct TabView_WithMe: View {
+    @StateObject private var user_ViewModel = User_ViewModel()
+    var userId: String
+    
     var body: some View {
         TabView{
             User_HomePage().tabItem{ Image(systemName: "house") }
             User_SearchPage().tabItem{ Image(systemName: "magnifyingglass") }
             User_AddPostPage().tabItem{ Image(systemName: "plus") }
-            User_ProfilePage().tabItem{ Image(systemName: "person") }
-            
+            if user_ViewModel.user != nil {
+                User_ProfilePage(userId: userId)
+                    .tabItem {
+                        Image(systemName: "person")
+                    }
+            } else {
+                Text("")
+                    .tabItem {
+                        Image(systemName: "person")
+                    }
+            }
         }.accentColor(.black)
+            .onAppear{
+                user_ViewModel.fetchUser(userId: userId)
+            }.navigationBarBackButtonHidden(true)
     }
 }
 
-#Preview {
-    TabView_WithMe()
-}
+//#Preview {
+//    TabView_WithMe(userId: userId)
+//}
