@@ -38,6 +38,7 @@ struct User_Search: View {
                     .cornerRadius(5)
             }
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 

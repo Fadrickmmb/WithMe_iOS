@@ -9,7 +9,17 @@ import SwiftUI
 
 struct User_HomePage: View {
     var body: some View {
+        VStack{
             Text("Home page")
+            
+            NavigationLink(destination: User_Search()) {
+                Text("Go to Search")
+                    .font(.system(size: 16))
+                    .padding(.top, 10)
+            }
+        }
+        .navigationBarBackButtonHidden(true)
+            
     }
 }
 
