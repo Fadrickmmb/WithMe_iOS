@@ -36,6 +36,14 @@ struct User_Search: View {
                     .padding(.horizontal, 50)
                     .padding(.vertical, 10)
                     .cornerRadius(5)
+                
+            }
+            HStack{
+                NavigationLink(destination: User_HomePage()) {
+                    Text("Back to Home Screen")
+                        .font(.system(size: 16))
+                        .padding(.top, 10)
+                }
             }
         }
         .navigationBarBackButtonHidden(true)
