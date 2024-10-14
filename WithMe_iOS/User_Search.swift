@@ -10,7 +10,7 @@ import Firebase
 
 struct User_Search: View {
     @State private var search: String = ""
-    @State private var userName: String = "No user found"
+    @State private var userName: String = ""
     @State private var userUid: String = ""
     @State private var showUserProfile = false
     
@@ -19,8 +19,9 @@ struct User_Search: View {
             HStack {
                 Image("withme_logo")
                     .resizable()
-                    .frame(width: 50, height: 18)
+                    .frame(width: 150, height: 54)
                     .padding(20)
+                Spacer()
                 Image("withme_yummy")
                     .resizable()
                     .frame(width: 30, height: 30)
@@ -32,32 +33,33 @@ struct User_Search: View {
                 Spacer()
             }
             
+            
             HStack {
                 Text("Search")
+                    .font(.system(size: 22))
             }
+            .padding(.top, 100)
             
             HStack {
                 TextField("Enter name to search", text: $search)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .autocapitalization(.none)
-                    .padding(.horizontal, 50)
+                    .padding(.horizontal, 20)
                     .padding(.vertical, 10)
                     .cornerRadius(5)
-            }
-            
-            HStack {
                 Button(action: {
                     searchUser()
-                }) {
-                    Text("Search User")
-                        .font(.system(size: 16))
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(5)
+                }){
+                    Image("withme_search")
+                        .resizable()
+                        .frame(width: 30, height: 30)
                 }
-            }
-            .padding(.top, 10)
+                Spacer()
+                
+                
+                
+            }   
+            
             
             if !userUid.isEmpty {
                 NavigationLink(
@@ -67,7 +69,7 @@ struct User_Search: View {
                     Text("\(userName)")
                         .font(.system(size: 18))
                         .foregroundColor(.blue)
-                        .padding(.top, 10)
+                        .padding(.top, 50)
                         .onTapGesture {
                             showUserProfile = true
                         }
@@ -77,6 +79,7 @@ struct User_Search: View {
                     .font(.system(size: 18))
                     .padding(.top, 10)
             }
+            Spacer()
             
             HStack {
                 NavigationLink(destination: User_HomePage()) {
