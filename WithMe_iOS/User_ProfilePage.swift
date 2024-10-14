@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct User_ProfilePage: View {
     @ObservedObject private var userViewModel = User_ViewModel()
     @ObservedObject private var postViewModel = Post_ProfileViewModel()
     @State private var navigateToEditProfile = false
-    var userId: String
+    @State private var selectedUserId: String = ""
+    @State private var didReturnFromPostView = false
+    @State private var currentUserId: String = ""
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -130,7 +133,10 @@ struct User_ProfilePage: View {
                                     postDate: post.postDate,
                                     yummys: post.yummys,
                                     comments: post.commentsNumber,
-                                    location: post.location
+                                    location: post.location,
+                                    onBack: {returnedUserId in
+                                        selectedUserId = returnedUserId
+                                    }
                                 )) {
                                     User_PostPartialView(
                                         postId: post.postId,
@@ -153,8 +159,18 @@ struct User_ProfilePage: View {
             }
         }
         .onAppear {
-            userViewModel.fetchUser(userId: userId)
-            postViewModel.fetchProfileData(userId: userId)
+            if let user = Auth.auth().currentUser {
+                currentUserId = user.uid
+                if didReturnFromPostView{
+                    userViewModel.fetchUser(userId: currentUserId)
+                    postViewModel.fetchProfileData(userId: currentUserId)
+                    didReturnFromPostView = false
+                }
+            } else {
+                userViewModel.fetchUser(userId: currentUserId)
+                postViewModel.fetchProfileData(userId: currentUserId)
+            }
+
         }.padding(.leading,5).padding(.trailing,5)
     }
 }

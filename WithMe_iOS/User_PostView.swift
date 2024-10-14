@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct User_PostView: View {
+    @Environment(\.presentationMode) var presentationMode
     var postId: String
     var userId: String
     var name: String
@@ -17,7 +19,10 @@ struct User_PostView: View {
     var yummys: Int
     var comments: Int
     var location: String
+    var onBack: ((String) -> Void)?
     @StateObject var commentViewModel = CommentsViewModel()
+    @State private var currentUserId: String = ""
+    
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -146,7 +151,8 @@ struct User_PostView: View {
                 
                 HStack{
                     Button {
-                        //navigateToEditProfile = true
+                        onBack?(userId)
+                        presentationMode.wrappedValue.dismiss()
                     } label: {
                         Text("Back")
                             .foregroundColor(.white)
@@ -159,13 +165,7 @@ struct User_PostView: View {
                                     .fill(Color.black)
                             )
                             .padding(.horizontal)
-                    }.background(
-                        NavigationLink(
-                            destination: User_EditProfilePage(),
-                            //isActive: $navigateToEditProfile,
-                            label: { EmptyView() }
-                        )
-                    ).buttonStyle(PlainButtonStyle())
+                        }.buttonStyle(PlainButtonStyle())
                     
                     Button {
                         
@@ -190,7 +190,10 @@ struct User_PostView: View {
                     ).buttonStyle(PlainButtonStyle()).padding()
                    }
             }.onAppear{
-                commentViewModel.fetchComments(userId: userId, postId: postId)
+                if let user = Auth.auth().currentUser{
+                    currentUserId = user.uid
+                    commentViewModel.fetchComments(userId: currentUserId, postId: postId)
+                }
             }.navigationBarBackButtonHidden(true)
         }.padding(.leading,5).padding(.trailing,5)
     }
