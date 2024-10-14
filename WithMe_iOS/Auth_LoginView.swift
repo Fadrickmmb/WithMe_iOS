@@ -1,3 +1,4 @@
+
 //
 //  Auth_LoginView.swift
 //  WithMe_iOS
@@ -48,12 +49,15 @@ struct Auth_LoginView: View {
                     .padding(.horizontal, 50)
                     .padding(.vertical, 10)
                     .cornerRadius(5)
+                
+                
 
                 NavigationLink(destination: Auth_ForgotPasswordView()) {
-                                    Text("Forgot Pasword?")
-                                        .font(.system(size: 16))
-                                        .padding(.top, 10)
-                                }
+                    Text("Forgot Pasword?")
+                        .font(.system(size: 16))
+                        .padding(.top, 10)
+                }
+
                 Button(action: loginUser) {
                     Text("Login")
                         .foregroundColor(.black)
@@ -72,24 +76,26 @@ struct Auth_LoginView: View {
                         .padding(.top, 10)
                         .padding(.horizontal, 50)
                 }
-
+                
+                
                 NavigationLink(destination: Auth_RegisterView()) {
-                                    Text("Don't Have an Account?\nRegister Here")
-                                        .multilineTextAlignment(.center)
-                                        .font(.system(size: 14))
-                                        .foregroundColor(.blue)
-                                        .padding(.top, 10)
-                                }
+                    Text("Don't Have an Account?\nRegister Here")
+                        .multilineTextAlignment(.center)
+                        .font(.system(size: 14))
+                        .foregroundColor(.blue)
+                        .padding(.top, 10)
+                }
+                .navigationBarBackButtonHidden(true)
                 
                 Spacer()
-                
+
+
+               
                 NavigationLink(destination: Admin_HomePage(), isActive: $navigateToAdmin) {
                     EmptyView()
                 }
-                if let userId = userId {
-                    NavigationLink(destination: TabView_WithMe(userId: userId), isActive: $navigateToUser) {
-                        EmptyView()
-                    }
+                NavigationLink(destination: TabView_WithMe(userId: userId ?? ""), isActive: $navigateToUser) {
+                    EmptyView()
                 }
             }
         }

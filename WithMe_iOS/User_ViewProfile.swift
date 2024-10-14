@@ -65,24 +65,24 @@ struct User_ViewProfile: View {
 
                     HStack {
                         VStack {
-                            Text(userViewModel.user?.numberFollowers ?? "0")
-                                .font(.custom("DMSerifDisplay-Regular", size: 22))
+                            //Text(userViewModel.user?.numberFollowers ?? "0")
+                            //    .font(.custom("DMSerifDisplay-Regular", size: 22))
                             Text("Followers")
                                 .font(.system(size: 16))
                         }
                         .padding()
 
                         VStack {
-                            Text(userViewModel.user?.numberPosts ?? "0")
-                                .font(.custom("DMSerifDisplay-Regular", size: 22))
+                            //Text(userViewModel.user?.numberPosts ?? "0")
+                            //    .font(.custom("DMSerifDisplay-Regular", size: 22))
                             Text("Posts")
                                 .font(.system(size: 16))
                         }
                         .padding()
 
                         VStack {
-                            Text(userViewModel.user?.numberFollowing ?? "0")
-                                .font(.custom("DMSerifDisplay-Regular", size: 22))
+                            //Text(userViewModel.user?.numberFollowing ?? "0")
+                             //   .font(.custom("DMSerifDisplay-Regular", size: 22))
                             Text("Following")
                                 .font(.system(size: 16))
                         }
@@ -151,7 +151,7 @@ struct User_ViewProfile: View {
         .onAppear {
             userViewModel.fetchUser(userId: userId)
             postViewModel.fetchProfileData(userId: userId)
-        }
+        }.navigationBarBackButtonHidden(true)
     }
 }
 //#Preview {

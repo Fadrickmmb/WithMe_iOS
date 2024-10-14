@@ -20,7 +20,6 @@ struct Post: Identifiable {
     var postDate: String
     var commentsNumber: Int
     
-    
     init(postId: String, userId: String, name: String, postImageUrl: String, userPhotoUrl: String, yummys: Int, location: String, postDate: String, commentsNumber: Int) {
         self.postId = postId
         self.userId = userId

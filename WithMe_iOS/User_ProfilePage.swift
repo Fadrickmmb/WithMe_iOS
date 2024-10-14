@@ -8,12 +8,11 @@
 import SwiftUI
 
 struct User_ProfilePage: View {
-    @StateObject private var userViewModel = User_ViewModel()
-    @StateObject private var postViewModel = Post_ProfileViewModel()
+    @ObservedObject private var userViewModel = User_ViewModel()
+    @ObservedObject private var postViewModel = Post_ProfileViewModel()
     @State private var navigateToEditProfile = false
     var userId: String
     
-
     var body: some View {
         ZStack(alignment: .top) {
             ScrollView(.vertical) {
@@ -33,8 +32,8 @@ struct User_ProfilePage: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 30, height: 30)
                     }
-                    .padding()
-
+                    .padding(.leading, 30)
+                    
                     HStack {
                         if let photoUrl = userViewModel.user?.userPhotoUrl, !photoUrl.isEmpty {
                             AsyncImage(url: URL(string: photoUrl)){ image in
@@ -58,41 +57,44 @@ struct User_ProfilePage: View {
                         }
                     }
                     .padding()
-
+                    
                     Text(userViewModel.user?.name.uppercased() ?? "Loading...")
                         .font(.custom("DMSerifDisplay-Regular", size: 26))
                         .padding().fixedSize(horizontal: true, vertical: false)
-
+                    
                     HStack {
                         VStack {
-                            Text(userViewModel.user?.numberFollowers ?? "0")
-                                .font(.custom("DMSerifDisplay-Regular", size: 22))
+                            //Text(userViewModel.user?.numberFollowers ?? "0")
+                                //.font(.custom("DMSerifDisplay-Regular", size: 22))
                             Text("Followers")
                                 .font(.system(size: 16))
                         }
                         .padding()
-
+                        
                         VStack {
-                            Text(userViewModel.user?.numberPosts ?? "0")
-                                .font(.custom("DMSerifDisplay-Regular", size: 22))
+                            //Text(userViewModel.user?.numberPosts ?? "0")
+                               // .font(.custom("DMSerifDisplay-Regular", size: 22))
                             Text("Posts")
                                 .font(.system(size: 16))
                         }
                         .padding()
-
+                        
                         VStack {
-                            Text(userViewModel.user?.numberFollowing ?? "0")
-                                .font(.custom("DMSerifDisplay-Regular", size: 22))
+                           // Text(userViewModel.user?.numberFollowing ?? "0")
+                             //   .font(.custom("DMSerifDisplay-Regular", size: 22))
                             Text("Following")
                                 .font(.system(size: 16))
                         }
                         .padding()
                     }
-
+                    
+                    Text("Bio").font(.custom("DMSerifDisplay-Regular", size: 22))
+                        .padding()
+                    
                     Text(userViewModel.user?.userBio ?? "No bio available")
                         .font(.custom("DMSerifDisplay-Regular", size: 26))
                         .padding()
-
+                    
                     Button {
                         navigateToEditProfile = true
                     } label: {
@@ -109,18 +111,18 @@ struct User_ProfilePage: View {
                             .padding(.horizontal)
                     }.background(
                         NavigationLink(
-                           destination: User_EditProfilePage(),
-                           isActive: $navigateToEditProfile,
-                           label: { EmptyView() }
+                            destination: User_EditProfilePage(),
+                            isActive: $navigateToEditProfile,
+                            label: { EmptyView() }
                         )
-                    )
-
+                    ).buttonStyle(PlainButtonStyle())
+                    
                     VStack(alignment: .leading) {
                         if(postViewModel.postList.isEmpty){
                             Text("No posts available.").foregroundColor(.gray).padding()
                         } else {
                             ForEach(postViewModel.postList) { post in
-                                NavigationLink(destination: User_PostPartialView(
+                                NavigationLink(destination: User_PostView(
                                     postId: post.postId,
                                     userId: post.userId,
                                     name: post.name,
@@ -143,8 +145,8 @@ struct User_ProfilePage: View {
                                         location: post.location
                                     )
                                 }
-                                .buttonStyle(PlainButtonStyle())
-                            }                        }
+                            }
+                        }
                     }
                     .padding(.top)
                 }
@@ -154,7 +156,8 @@ struct User_ProfilePage: View {
         .onAppear {
             userViewModel.fetchUser(userId: userId)
             postViewModel.fetchProfileData(userId: userId)
-        }   }
+        }
+    }
 }
 
 //#Preview {

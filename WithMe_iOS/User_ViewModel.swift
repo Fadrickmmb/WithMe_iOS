@@ -19,9 +19,9 @@ class User_ViewModel: ObservableObject {
                 let name = value["name"] as? String ?? ""
                 let email = value["email"] as? String ?? ""
                 let id = value["id"] as? String ?? ""
-                let numberPosts = value["numberPosts"] as? String ?? "0"
-                let numberFollowers = value["numberFollowers"] as? String ?? "0"
-                let numberFollowing = value["numberFollowing"] as? String ?? "0"
+                //let numberPosts = value["numberPosts"] as? String ?? "0"
+                //let numberFollowers = value["numberFollowers"] as? String ?? "0"
+                //let numberFollowing = value["numberFollowing"] as? String ?? "0"
                 let userPhotoUrl = value["userPhotoUrl"] as? String ?? ""
                 let userBio = value["userBio"] as? String ?? ""
                 
@@ -30,9 +30,9 @@ class User_ViewModel: ObservableObject {
                         name: name,
                         email: email,
                         id: id,
-                        numberPosts: numberPosts,
-                        numberFollowers: numberFollowers,
-                        numberFollowing: numberFollowing,
+                //        numberPosts: numberPosts,
+                //        numberFollowers: numberFollowers,
+                //        numberFollowing: numberFollowing,
                         userPhotoUrl: userPhotoUrl,
                         userBio: userBio)
                 }
