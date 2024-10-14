@@ -19,8 +19,9 @@ struct Post: Identifiable {
     var location: String
     var postDate: String
     var commentsNumber: Int
+    var content: String
     
-    init(postId: String, userId: String, name: String, postImageUrl: String, userPhotoUrl: String, yummys: Int, location: String, postDate: String, commentsNumber: Int) {
+    init(postId: String, userId: String, name: String, postImageUrl: String, userPhotoUrl: String, yummys: Int, location: String, postDate: String, commentsNumber: Int, content: String) {
         self.postId = postId
         self.userId = userId
         self.name = name
@@ -30,5 +31,6 @@ struct Post: Identifiable {
         self.location = location
         self.postDate = postDate
         self.commentsNumber = commentsNumber
+        self.content = content
     }
 }

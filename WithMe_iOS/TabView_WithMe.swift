@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct TabView_WithMe: View {
     @StateObject private var user_ViewModel = User_ViewModel()
-    var userId: String
+    @State private var currentUserId: String = ""
     
     var body: some View {
         TabView{
@@ -17,7 +18,7 @@ struct TabView_WithMe: View {
             User_Search().tabItem{ Image(systemName: "magnifyingglass") }
             User_AddPostPage().tabItem{ Image(systemName: "plus") }
             if user_ViewModel.user != nil {
-                User_ProfilePage(userId: userId)
+                User_ProfilePage()
                     .tabItem {
                         Image(systemName: "person")
                     }
@@ -29,7 +30,13 @@ struct TabView_WithMe: View {
             }
         }.accentColor(.black)
             .onAppear{
-                user_ViewModel.fetchUser(userId: userId)
+                if let user = Auth.auth().currentUser{
+                    currentUserId = user.uid
+                    print("Profile user ID received: \(currentUserId)")
+                    user_ViewModel.fetchUser(userId: currentUserId)
+                } else {
+                    print("Profile user ID: \(currentUserId)")
+                }
             }.navigationBarBackButtonHidden(true)
     }
 }

@@ -7,42 +7,52 @@
 
 import SwiftUI
 
-struct CommentDialog: View{
-    let title: String
-    let message: String
+struct CommentDialog: View {
+    @Binding var commentText: String
+    @Binding var isShowing: Bool
     let buttonTitle: String
     let action: () -> ()
-    
-    var body: some View{
-        VStack{
-            Text(title)
-                .font(.title2)
-                .bold()
-                .padding()
-            
-            Text(message)
-                .font(.body)
-            
-            Button{
-                action()
-            } label: {
-                RoundedRectangle(cornerRadius: 20)
-                
-                Text(buttonTitle)
-                    .font(.system(size: 16,weight: .bold))
-                    .padding()
-            }.padding()
-        }
-        .fixedSize(horizontal: false, vertical: true)
-        .padding()
-        .background(.white)
-        clipShape(RoundedRectangle(cornerRadius: 20))
-            .shadow(radius: 20)
-    }
-}
 
-struct CommentDialog_Previews: PreviewProvider{
-    static var previews: some View{
-        CommentDialog(title: "Add comment:",message: "Write your comment", buttonTitle: "Add", action: <#T##() -> Void#>)
+    var body: some View {
+        ZStack{
+            
+            VStack {
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        isShowing = false
+                    }) {
+                    Image(systemName: "xmark")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .padding(20)
+                    }
+                }
+                Spacer()
+                Text("Add Comment")
+                    .font(.title2)
+                    .bold()
+                    .padding()
+
+                TextField("Enter your comment", text: $commentText)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+
+                Button {
+                    action()
+                } label: {
+                    Text(buttonTitle)
+                        .font(.system(size: 16, weight: .bold))
+                        .padding()
+                        .background(RoundedRectangle(cornerRadius: 20).fill(Color.black))
+                        .foregroundColor(.white)
+                }
+                .padding()
+            }
+            .fixedSize(horizontal: false, vertical: true)
+            .padding()
+            .background(Color.white)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .shadow(radius: 20)        }
     }
 }

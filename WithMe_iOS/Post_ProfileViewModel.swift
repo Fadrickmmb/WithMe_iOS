@@ -8,14 +8,15 @@
 import SwiftUI
 import FirebaseDatabase
 
+
 class Post_ProfileViewModel: ObservableObject {
     @Published var name: String = ""
     @Published var postList: [Post] = []
     
-    private var ref: DatabaseReference = Database.database().reference()
+    private var reference: DatabaseReference = Database.database().reference()
     
     func fetchProfileData(userId: String) {
-        ref.child("users").child(userId).observeSingleEvent(of: .value) { snapshot in
+        reference.child("users").child(userId).observeSingleEvent(of: .value) { snapshot in
             guard let value = snapshot.value as? [String: Any] else {
                 print("Failed to fetch user profile data")
                 return
@@ -25,7 +26,7 @@ class Post_ProfileViewModel: ObservableObject {
             }
         }
         
-        ref.child("users").child(userId).child("posts").observe(.value) { snapshot in
+        reference.child("users").child(userId).child("posts").observe(.value) { snapshot in
             var posts: [Post] = []
             for child in snapshot.children {
                 if let childSnapshot = child as? DataSnapshot,
@@ -39,6 +40,7 @@ class Post_ProfileViewModel: ObservableObject {
                     let location = postDictionary["location"] as? String ?? ""
                     let postDate = postDictionary["postDate"] as? String ?? ""
                     let commentsNumber = postDictionary["commentNumbers"] as? Int ?? 0
+                    let content = postDictionary["content"] as? String ?? ""
                     
                     if (!postId.isEmpty) {
                         let post = Post(
@@ -50,7 +52,8 @@ class Post_ProfileViewModel: ObservableObject {
                             yummys: yummys,
                             location: location,
                             postDate: postDate,
-                            commentsNumber: commentsNumber
+                            commentsNumber: commentsNumber,
+                            content: content
                         )
                         posts.append(post)
                     }

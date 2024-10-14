@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import FirebaseAuth
+import FirebaseDatabase
 
 struct User_PostPartialView: View {
     var postId: String
@@ -17,7 +19,9 @@ struct User_PostPartialView: View {
     var yummys: Int
     var comments: Int
     var location: String
-
+    @State private var showChangePostDialog = false
+    @State private var showEditPostView = false
+    
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -56,6 +60,8 @@ struct User_PostPartialView: View {
                     Circle().frame(width: 7, height: 7)
                     Circle().frame(width: 7, height: 7)
                     Circle().frame(width: 7, height: 7)
+                }.onTapGesture {
+                    showChangePostDialog = true
                 }
             }
             .padding(.vertical)
@@ -106,6 +112,28 @@ struct User_PostPartialView: View {
             .padding(.vertical)
         }
         .padding()
+        .sheet(isPresented: $showChangePostDialog) {
+            ChangePostDialog(buttonTitle: "", action: { actionType in
+                if actionType == "delete" {
+                    deletePost()
+                } else if actionType == "edit" {
+                    showEditPostView = true
+                }
+            }, isShowing: $showChangePostDialog)
+        }
+    }
+    
+    func deletePost(){
+        let reference = Database.database().reference()
+        reference.child("users").child(userId).child("posts").child(postId).removeValue {
+            error, _ in
+            if let error = error{
+                print("Error deleting post: \(error.localizedDescription)")
+            } else {
+                print("Post deleted successfuly.")
+            }
+            
+        }
     }
 }
 

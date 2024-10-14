@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseAuth
+import FirebaseDatabase
 
 struct User_PostView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -19,10 +20,11 @@ struct User_PostView: View {
     var yummys: Int
     var comments: Int
     var location: String
-    var onBack: ((String) -> Void)?
+    var content: String
     @StateObject var commentViewModel = CommentsViewModel()
     @State private var currentUserId: String = ""
-    
+    @State private var showCommentDialog = false
+    @State private var commentText: String = ""    
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -75,11 +77,7 @@ struct User_PostView: View {
                         }
                     }
                     Spacer()
-                    HStack(spacing: 5) {
-                        Circle().frame(width: 7, height: 7)
-                        Circle().frame(width: 7, height: 7)
-                        Circle().frame(width: 7, height: 7)
-                    }
+                    
                 }
                 .padding(.vertical, 5)
 
@@ -128,6 +126,9 @@ struct User_PostView: View {
                 }
                 .padding(.vertical,5)
                 
+                Text(content).fontWeight(.bold)
+                    .font(.system(size: 16))
+                    .padding(.trailing, 10)
                 if(commentViewModel.comments.isEmpty){
                     Text("No comments yet.")
                         .padding()
@@ -151,7 +152,6 @@ struct User_PostView: View {
                 
                 HStack{
                     Button {
-                        onBack?(userId)
                         presentationMode.wrappedValue.dismiss()
                     } label: {
                         Text("Back")
@@ -168,7 +168,7 @@ struct User_PostView: View {
                         }.buttonStyle(PlainButtonStyle())
                     
                     Button {
-                        
+                        showCommentDialog = true
                     } label: {
                         Text("Comment")
                             .foregroundColor(.white)
@@ -181,13 +181,7 @@ struct User_PostView: View {
                                     .fill(Color.black)
                             )
                             .padding(.horizontal)
-                    }.background(
-                        NavigationLink(
-                            destination: User_EditProfilePage(),
-                            //isActive: $navigateToEditProfile,
-                            label: { EmptyView() }
-                        )
-                    ).buttonStyle(PlainButtonStyle()).padding()
+                    }.buttonStyle(PlainButtonStyle()).padding()
                    }
             }.onAppear{
                 if let user = Auth.auth().currentUser{
@@ -195,7 +189,43 @@ struct User_PostView: View {
                     commentViewModel.fetchComments(userId: currentUserId, postId: postId)
                 }
             }.navigationBarBackButtonHidden(true)
-        }.padding(.leading,5).padding(.trailing,5)
+             .sheet(isPresented: $showCommentDialog) {
+                CommentDialog(commentText: $commentText, isShowing: $showCommentDialog, buttonTitle: "Comment"){
+                addComment()
+                    }
+             }
+        }.padding(.leading,5)
+         .padding(.trailing,5)
+    }
+    
+    func addComment() {
+        guard !commentText.isEmpty else {
+            return
+        }
+        
+        let commentId = UUID().uuidString
+        let date = DateFormatter.localizedString(from: Date(), dateStyle: .medium, timeStyle: .short)
+        let comment = Comment(
+            name: name,
+            text: commentText,
+            date: date,
+            userId: currentUserId,
+            postId: postId,
+            commentId: commentId
+        )
+        
+        let reference = Database.database().reference()
+        reference.child("users").child(userId).child("posts").child(postId).child("comments").child(commentId).setValue([
+            "name": comment.name,
+            "text": comment.text,
+            "date": comment.date,
+            "userId": comment.userId,
+            "postId": comment.postId,
+            "commentId": comment.commentId
+        ])
+        commentViewModel.fetchComments(userId: userId, postId: postId)
+        commentText = ""
+        showCommentDialog = false
     }
 }
 
