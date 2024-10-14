@@ -32,7 +32,6 @@ struct User_ProfilePage: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 30, height: 30)
                     }
-                    .padding(.leading, 30)
                     
                     HStack {
                         if let photoUrl = userViewModel.user?.userPhotoUrl, !photoUrl.isEmpty {
@@ -156,7 +155,7 @@ struct User_ProfilePage: View {
         .onAppear {
             userViewModel.fetchUser(userId: userId)
             postViewModel.fetchProfileData(userId: userId)
-        }
+        }.padding(.leading,5).padding(.trailing,5)
     }
 }
 
