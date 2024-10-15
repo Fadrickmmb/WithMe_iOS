@@ -9,7 +9,7 @@ import SwiftUI
 
 struct User_HomePage: View {
     var body: some View {
-            Text("Home page")
+            Text("Home page").navigationBarBackButtonHidden(true)
     }
 }
 

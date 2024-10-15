@@ -17,6 +17,7 @@ struct Auth_LoginView: View {
     @State private var isAdmin: Bool = false
     @State private var navigateToAdmin: Bool = false
     @State private var navigateToUser: Bool = false
+    @State private var userId: String?
 
     var body: some View {
         NavigationView {
@@ -83,6 +84,7 @@ struct Auth_LoginView: View {
                         .foregroundColor(.blue)
                         .padding(.top, 10)
                 }
+                .navigationBarBackButtonHidden(true)
                 
                 Spacer()
 
@@ -91,7 +93,7 @@ struct Auth_LoginView: View {
                 NavigationLink(destination: Admin_HomePage(), isActive: $navigateToAdmin) {
                     EmptyView()
                 }
-                NavigationLink(destination: User_HomePage(), isActive: $navigateToUser) {
+                NavigationLink(destination: TabView_WithMe(), isActive: $navigateToUser) {
                     EmptyView()
                 }
             }
@@ -102,7 +104,8 @@ struct Auth_LoginView: View {
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
             if let error = error {
                 loginError = "Failed to login: \(error.localizedDescription)"
-            } else {
+            } else if let user = Auth.auth().currentUser{
+                self.userId = user.uid
                 checkUserRole()
             }
         }
