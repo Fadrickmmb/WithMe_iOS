@@ -16,6 +16,7 @@ struct User_HomePage: View {
     let user = Auth.auth().currentUser
 
     var body: some View {
+
         NavigationView {
             VStack {
                 if isLoading {
@@ -86,6 +87,9 @@ struct User_HomePage: View {
                 self.isLoading = false
             }
         })
+
+            Text("Home page").navigationBarBackButtonHidden(true)
+
     }
 }
 
