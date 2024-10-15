@@ -31,33 +31,30 @@ struct User_Search: View {
                     .padding(10)
                 Spacer()
             }
+
             
             HStack {
                 Text("Search")
             }
-            
-            HStack {
-                TextField("Enter name to search", text: $search)
+            .padding(.top, 100)
+          
+            HStack{
+                TextField("",text: $search)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .autocapitalization(.none)
                     .padding(.horizontal, 50)
                     .padding(.vertical, 10)
                     .cornerRadius(5)
-            }
-            
-            HStack {
                 Button(action: {
                     searchUser()
                 }) {
-                    Text("Search User")
-                        .font(.system(size: 16))
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(5)
+                    Image("withme_search")
+                        .resizable()
+                        .frame(width: 30, height: 30)
                 }
+              Spacer()
             }
-            .padding(.top, 10)
+            
             
             if !userId.isEmpty {
                 NavigationLink(
@@ -77,7 +74,8 @@ struct User_Search: View {
                     .font(.system(size: 18))
                     .padding(.top, 10)
             }
-            
+            Spacer()
+          
             HStack {
                 NavigationLink(destination: User_HomePage()) {
                     Text("Back to Home Screen")
@@ -92,7 +90,7 @@ struct User_Search: View {
     func searchUser() {
         guard search.count >= 5 else {
             userName = "Please enter at least 5 characters"
-            userId = ""
+            userUid = ""
             return
         }
         
@@ -106,16 +104,16 @@ struct User_Search: View {
                     if let name = user.value["name"] as? String, let uid = user.key as? String {
                         if name.lowercased().hasPrefix(searchKey) {
                             userName = name
-                            userId = uid
+                            userUid = uid
                             return
                         }
                     }
                 }
                 userName = "We haven't found a user that matches '\(searchKey)'"
-                userId = ""
+                userUid = ""
             } else {
                 userName = "No user data available"
-                userId = ""
+                userUid = ""
             }
         }
     }
