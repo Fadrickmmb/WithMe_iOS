@@ -121,6 +121,15 @@ struct User_PostPartialView: View {
                 }
             }, isShowing: $showChangePostDialog)
         }
+        .background(
+            NavigationLink(
+                destination: EditPostView(postId: postId),
+                isActive: $showEditPostView,
+                label: {
+                    EmptyView()
+                }
+            )
+        )
     }
     
     func deletePost(){
