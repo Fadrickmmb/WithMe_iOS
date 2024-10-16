@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import FirebaseAuth
 import FirebaseStorage
+import FirebaseDatabase
 
 struct User_AddPostPage: View {
 
@@ -23,6 +24,22 @@ struct User_AddPostPage: View {
 
     var body: some View {
         VStack {
+            HStack {
+                Image("withme_logo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 70)
+                Spacer()
+                Image("withme_yummy")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 30, height: 30)
+                Image("withme_comment")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 30, height: 30)
+            }
+            .padding()
 
             VStack {
                 if let profileImage = profileImage {
@@ -118,34 +135,47 @@ struct User_AddPostPage: View {
     }
 
     func createPost(image: UIImage, location: String, description: String) {
-        // Step 1: Upload image
         uploadImage(image) { result in
             switch result {
             case .success(let imageURL):
-                // Step 2: Save post to Firebase Database
-                let username = UserDefaults.standard.string(forKey: "username") ?? "Anonymous"
+                guard let currentUser = FirebaseManager.shared.auth.currentUser else {
+                    errorMessage = "User not authenticated"
+                    isLoading = false
+                    return
+                }
+
+                let userId = currentUser.uid
+                let username = currentUser.displayName ?? "Anonymous"
+                let postId = UUID().uuidString
+                let postDate = DateFormatter.localizedString(from: Date(), dateStyle: .medium, timeStyle: .short)
+
                 let postData: [String: Any] = [
-                    "username": username,
+                    "postId": postId,
+                    "userId": userId,
+                    "name": username,
                     "location": location,
-                    "imageURL": imageURL,
-                    "likes": 0,
-                    "comments": 0,
-                    "content": description
+                    "postImageUrl": imageURL,
+                    "postDate": postDate,
+                    "content": description,
+                    "yummys": 0,
+                    "commentsNumber": 0
                 ]
 
-//                FirebaseManager.shared.databaseRef.child("posts").childByAutoId().setValue(postData) { error, _ in
-//                    DispatchQueue.main.async {
-//                        isLoading = false // Stop loading
-//                        if let error = error {
-//                            errorMessage = "Failed to create post: \(error.localizedDescription)"
-//                        } else {
-//                            postCreated = true // Show success alert
-//                        }
-//                    }
-//                }
+                let userPostsRef = FirebaseManager.shared.databaseRef.child("users").child(userId).child("posts").child(postId)
+
+                userPostsRef.setValue(postData) { error, _ in
+                    DispatchQueue.main.async {
+                        isLoading = false
+                        if let error = error {
+                            errorMessage = "Failed to create post: \(error.localizedDescription)"
+                        } else {
+                            postCreated = true
+                        }
+                    }
+                }
             case .failure(let error):
                 DispatchQueue.main.async {
-                    isLoading = false // Stop loading
+                    isLoading = false
                     errorMessage = "Image upload failed: \(error.localizedDescription)"
                 }
             }
@@ -182,4 +212,8 @@ struct User_AddPostPage: View {
         }
     }
 
+}
+
+#Preview {
+    User_AddPostPage()
 }

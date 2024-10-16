@@ -16,9 +16,24 @@ struct User_HomePage: View {
     let user = Auth.auth().currentUser
 
     var body: some View {
-
         NavigationView {
             VStack {
+                HStack {
+                    Image("withme_logo")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 70)
+                    Spacer()
+                    Image("withme_yummy")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 30, height: 30)
+                    Image("withme_comment")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 30, height: 30)
+                }
+                .padding()
                 if isLoading {
                     ProgressView("Loading posts...")
                         .progressViewStyle(CircularProgressViewStyle())
@@ -55,19 +70,19 @@ struct User_HomePage: View {
             var fetchedPosts: [Post] = []
 
             for child in snapshot.children.allObjects as? [DataSnapshot] ?? [] {
-                if let dict = child.value as? [String: Any],
-                   let postId = dict["postId"] as? String,
-                   let userId = dict["userId"] as? String,
-                   let name = dict["name"] as? String,
-                   let postImageUrl = dict["postImageUrl"] as? String,
-                   let location = dict["location"] as? String,
-                   let postDate = dict["postDate"] as? String,
-                   let content = dict["content"] as? String,
-                   let comments = dict["comments"] as? [String: Any] {
-
+                if let dict = child.value as? [String: Any] {
+                    let postId = dict["postId"] as? String ?? child.key
+                    let userId = dict["userId"] as? String ?? "Unknown"
+                    let name = dict["name"] as? String ?? dict["userName"] as? String ?? "Anonymous"
+                    let postImageUrl = dict["postImageUrl"] as? String ?? ""
+                    let location = dict["location"] as? String ?? "Unknown"
+                    let postDate = dict["postDate"] as? String ?? ""
+                    let content = dict["content"] as? String ?? ""
+                    let comments = dict["comments"] as? [String: Any] ?? [:]
                     let commentsNumber = comments.count
-                    let yummys = 0
-                    let userPhotoUrl = ""
+                    let yummys = dict["yummys"] as? Int ?? 0
+                    let userPhotoUrl = dict["userPhotoUrl"] as? String ?? ""
+
                     let post = Post(postId: postId,
                                     userId: userId,
                                     name: name,
@@ -79,6 +94,8 @@ struct User_HomePage: View {
                                     commentsNumber: commentsNumber,
                                     content: content)
                     fetchedPosts.append(post)
+                } else {
+                    print("Error processing post data for child: \(child.key)")
                 }
             }
 
@@ -87,9 +104,6 @@ struct User_HomePage: View {
                 self.isLoading = false
             }
         })
-
-            Text("Home page").navigationBarBackButtonHidden(true)
-
     }
 }
 
