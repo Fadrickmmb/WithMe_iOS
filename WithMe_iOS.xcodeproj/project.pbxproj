@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14BFD0B22CC7E7110024F1F1 /* Auth_ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BFD0B12CC7E7110024F1F1 /* Auth_ForgotPasswordView.swift */; };
+		14BFD0B52CC7E7280024F1F1 /* Auth_LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BFD0B32CC7E7280024F1F1 /* Auth_LoginView.swift */; };
+		14BFD0B62CC7E7280024F1F1 /* Auth_RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BFD0B42CC7E7280024F1F1 /* Auth_RegisterView.swift */; };
 		378429162CA711030048F45B /* User_HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378429152CA711030048F45B /* User_HomePage.swift */; };
 		378429182CA71B8F0048F45B /* TabView_WithMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378429172CA71B8F0048F45B /* TabView_WithMe.swift */; };
 		3784291A2CA71C8C0048F45B /* User_AddPostPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378429192CA71C8C0048F45B /* User_AddPostPage.swift */; };
@@ -48,6 +51,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		14BFD0B12CC7E7110024F1F1 /* Auth_ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth_ForgotPasswordView.swift; sourceTree = "<group>"; };
+		14BFD0B32CC7E7280024F1F1 /* Auth_LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth_LoginView.swift; sourceTree = "<group>"; };
+		14BFD0B42CC7E7280024F1F1 /* Auth_RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth_RegisterView.swift; sourceTree = "<group>"; };
 		378429152CA711030048F45B /* User_HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User_HomePage.swift; sourceTree = "<group>"; };
 		378429172CA71B8F0048F45B /* TabView_WithMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView_WithMe.swift; sourceTree = "<group>"; };
 		378429192CA71C8C0048F45B /* User_AddPostPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User_AddPostPage.swift; sourceTree = "<group>"; };
@@ -132,7 +138,10 @@
 				378429312CA72D6C0048F45B /* WithMe-iOS-Info.plist */,
 				3784292C2CA728D60048F45B /* Font */,
 				3784291F2CA71CCA0048F45B /* User_ProfilePage.swift */,
+				14BFD0B12CC7E7110024F1F1 /* Auth_ForgotPasswordView.swift */,
 				D3516ED42CA0A2E00027948F /* WithMe_iOSApp.swift */,
+				14BFD0B32CC7E7280024F1F1 /* Auth_LoginView.swift */,
+				14BFD0B42CC7E7280024F1F1 /* Auth_RegisterView.swift */,
 				D3516ED62CA0A2E00027948F /* ContentView.swift */,
 				D3516ED82CA0A2E30027948F /* Assets.xcassets */,
 				D3516EDA2CA0A2E30027948F /* Preview Content */,
@@ -316,10 +325,13 @@
 				3784291A2CA71C8C0048F45B /* User_AddPostPage.swift in Sources */,
 				D3516ED72CA0A2E00027948F /* ContentView.swift in Sources */,
 				378429162CA711030048F45B /* User_HomePage.swift in Sources */,
+				14BFD0B52CC7E7280024F1F1 /* Auth_LoginView.swift in Sources */,
+				14BFD0B62CC7E7280024F1F1 /* Auth_RegisterView.swift in Sources */,
 				378429182CA71B8F0048F45B /* TabView_WithMe.swift in Sources */,
 				D3516ED52CA0A2E00027948F /* WithMe_iOSApp.swift in Sources */,
 				378429222CA71CE20048F45B /* User_SearchPage.swift in Sources */,
 				378429202CA71CCA0048F45B /* User_ProfilePage.swift in Sources */,
+				14BFD0B22CC7E7110024F1F1 /* Auth_ForgotPasswordView.swift in Sources */,
 				378429242CA71D000048F45B /* User_ViewProfile.swift in Sources */,
 				3784291C2CA71C9D0048F45B /* User_EditProfilePage.swift in Sources */,
 				3784291E2CA71CB50048F45B /* User_PostView.swift in Sources */,
