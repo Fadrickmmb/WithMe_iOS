@@ -10,8 +10,8 @@ import Firebase
 
 struct User_Search: View {
     @State private var search: String = ""
-    @State private var userName: String = "No user found"
-    @State private var userId: String = ""
+    @State private var userName: String = ""
+    @State private var userUid: String = ""
     @State private var showUserProfile = false
     
     var body: some View {
@@ -19,8 +19,9 @@ struct User_Search: View {
             HStack {
                 Image("withme_logo")
                     .resizable()
-                    .frame(width: 50, height: 18)
+                    .frame(width: 150, height: 54)
                     .padding(20)
+                Spacer()
                 Image("withme_yummy")
                     .resizable()
                     .frame(width: 30, height: 30)
@@ -31,40 +32,44 @@ struct User_Search: View {
                     .padding(10)
                 Spacer()
             }
-
             
             HStack {
                 Text("Search")
+                    .font(.system(size: 22))
             }
             .padding(.top, 100)
-          
-            HStack{
-                TextField("",text: $search)
+            
+            HStack {
+                TextField("Enter name to search", text: $search)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .autocapitalization(.none)
-                    .padding(.horizontal, 50)
+                    .padding(.horizontal, 20)
                     .padding(.vertical, 10)
                     .cornerRadius(5)
                 Button(action: {
                     searchUser()
-                }) {
+                }){
                     Image("withme_search")
                         .resizable()
                         .frame(width: 30, height: 30)
                 }
-              Spacer()
-            }
+              
+                Spacer()
+                
+                
+                
+            }   
             
             
-            if !userId.isEmpty {
+            if !userUid.isEmpty {
                 NavigationLink(
-                    destination: User_ViewProfile(userId: userId),
+                    destination: User_ViewProfile(userName: userName, userUid: userUid),
                     isActive: $showUserProfile
                 ) {
                     Text("\(userName)")
                         .font(.system(size: 18))
                         .foregroundColor(.blue)
-                        .padding(.top, 10)
+                        .padding(.top, 50)
                         .onTapGesture {
                             showUserProfile = true
                         }
