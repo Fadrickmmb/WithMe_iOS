@@ -18,8 +18,7 @@ struct User_HomePage: View {
                     .padding(.top, 10)
             }
         }
-        .navigationBarBackButtonHidden(true)
-            
+        .navigationBarBackButtonHidden(true)     
     }
 }
 
