@@ -162,6 +162,8 @@ struct User_ProfilePage: View {
                 postViewModel.fetchProfileData(userId: currentUserId)
             }
         }.padding(.leading,5).padding(.trailing,5)
+            .navigationBarHidden(true)
+            .navigationBarBackButtonHidden(true)
     }
 }
 

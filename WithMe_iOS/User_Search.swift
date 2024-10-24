@@ -33,6 +33,7 @@ struct User_Search: View {
                 Spacer()
             }
             
+            
             HStack {
                 Text("Search")
                     .font(.system(size: 22))
@@ -53,12 +54,11 @@ struct User_Search: View {
                         .resizable()
                         .frame(width: 30, height: 30)
                 }
-              
                 Spacer()
                 
                 
                 
-            }   
+            }
             
             
             if !userUid.isEmpty {
@@ -80,7 +80,7 @@ struct User_Search: View {
                     .padding(.top, 10)
             }
             Spacer()
-          
+            
             HStack {
                 NavigationLink(destination: User_HomePage()) {
                     Text("Back to Home Screen")

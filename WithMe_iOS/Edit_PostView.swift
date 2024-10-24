@@ -38,9 +38,6 @@ struct EditPostView: View {
                     .frame(height: 200)
                     .clipped()
                     .padding()
-                
-            } else {
-                ProgressView("Loading image")
             }
             
             Button(action: {

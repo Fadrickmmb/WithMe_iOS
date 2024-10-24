@@ -53,6 +53,6 @@ struct CommentDialog: View {
             .padding()
             .background(Color.white)
             .clipShape(RoundedRectangle(cornerRadius: 20))
-            .shadow(radius: 20)        }
-    }
+            .shadow(radius: 20)        }.navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)    }
 }

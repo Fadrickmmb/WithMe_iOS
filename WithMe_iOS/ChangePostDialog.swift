@@ -66,7 +66,8 @@ struct ChangePostDialog: View {
                     }                }
                 Spacer()
             }
-        }
+        }.navigationBarBackButtonHidden(true)
+            .navigationBarHidden(true)
     }
 }
 

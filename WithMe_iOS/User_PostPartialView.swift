@@ -120,8 +120,9 @@ struct User_PostPartialView: View {
                     showEditPostView = true
                 }
             }, isShowing: $showChangePostDialog)
-        }
-        .background(
+        }.navigationBarBackButtonHidden(true)
+            .navigationBarHidden(true)
+            .background(
             NavigationLink(
                 destination: EditPostView(postId: postId),
                 isActive: $showEditPostView,
