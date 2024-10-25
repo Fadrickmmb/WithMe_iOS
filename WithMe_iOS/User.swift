@@ -8,12 +8,26 @@
 import Foundation
 
 
-struct User: Codable {
+struct User: Identifiable, Codable {
     var name: String
     var email: String
     var id: String
     var userPhotoUrl: String?
     var userBio: String?
+    var posts: [String: Post] = [:]
+    var following: [String: Bool] = [:]
+    var followers: [String: Bool] = [:]
+    
+    init(){
+        self.id = UUID().uuidString
+        self.name = ""
+        self.email = ""
+        self.userPhotoUrl = nil
+        self.userBio = nil
+        self.posts = [:]
+        self.following = [:]
+        self.followers = [:]
+    }
     
     init(name: String, email: String, id: String) {
         self.name = name
@@ -21,7 +35,9 @@ struct User: Codable {
         self.id = id
         self.userPhotoUrl = nil
         self.userBio = nil
-    }
+        self.posts = [:]
+        self.following = [:]
+        self.followers = [:]    }
 
     init(name: String, email: String, id: String, userPhotoUrl: String, userBio: String) {
         self.name = name
@@ -29,5 +45,8 @@ struct User: Codable {
         self.id = id
         self.userPhotoUrl = userPhotoUrl
         self.userBio = userBio
+        self.posts = [:]
+        self.following = [:]
+        self.followers = [:]
     }
 }

@@ -14,6 +14,7 @@ struct User_ProfilePage: View {
     @ObservedObject private var postViewModel = Post_ProfileViewModel()
     @State private var navigateToEditProfile = false
     @State private var currentUserId: String = ""
+    @State private var numberPosts: Int = 0
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -59,7 +60,7 @@ struct User_ProfilePage: View {
                     }
                     .padding()
                     
-                    Text(userViewModel.user?.name.uppercased() ?? "Loading...")
+                    Text(userViewModel.user?.name.uppercased() ?? "")
                         .font(.custom("DMSerifDisplay-Regular", size: 26))
                         .padding().fixedSize(horizontal: true, vertical: false)
                     
@@ -73,10 +74,9 @@ struct User_ProfilePage: View {
                         .padding()
                         
                         VStack {
-                            //Text(userViewModel.user?.numberPosts ?? "0")
-                               // .font(.custom("DMSerifDisplay-Regular", size: 22))
-                            Text("Posts")
-                                .font(.system(size: 16))
+                            Text("\(postViewModel.postList.count)")
+                                .font(.custom("DMSerifDisplay-Regular", size: 22))
+                            Text("Posts").font(.system(size: 16))
                         }
                         .padding()
                         
@@ -156,7 +156,7 @@ struct User_ProfilePage: View {
             }
         }
         .onAppear {
-            if let user = Auth.auth().currentUser {
+            if let user = Auth.auth().currentUser{
                 currentUserId = user.uid
                 userViewModel.fetchUser(userId: currentUserId)
                 postViewModel.fetchProfileData(userId: currentUserId)

@@ -75,8 +75,8 @@ struct User_ViewProfile: View {
                         .padding()
                         
                         VStack {
-                            //Text(userViewModel.user?.numberPosts ?? "0")
-                            //    .font(.custom("DMSerifDisplay-Regular", size: 22))
+                            Text("\(postViewModel.postList.count)")
+                                .font(.custom("DMSerifDisplay-Regular", size: 22))
                             Text("Posts")
                                 .font(.system(size: 16))
                         }

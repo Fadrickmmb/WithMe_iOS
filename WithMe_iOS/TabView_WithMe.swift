@@ -14,7 +14,7 @@ struct TabView_WithMe: View {
     
     var body: some View {
         
-            TabView{
+        TabView{
                 User_HomePage().tabItem{ Image(systemName: "house") }
                 User_Search().tabItem{ Image(systemName: "magnifyingglass") }
                 User_AddPostPage().tabItem{ Image(systemName: "plus") }
