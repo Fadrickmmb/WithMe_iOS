@@ -63,7 +63,7 @@ struct User_Search: View {
             
             if !userUid.isEmpty {
                 NavigationLink(
-                    destination: User_ViewProfile(userName: userName, userUid: userUid),
+                    destination: User_ViewProfile(userId: userUid),
                     isActive: $showUserProfile
                 ) {
                     Text("\(userName)")

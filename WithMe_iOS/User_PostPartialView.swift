@@ -113,13 +113,19 @@ struct User_PostPartialView: View {
         }
         .padding()
         .sheet(isPresented: $showChangePostDialog) {
-            ChangePostDialog(buttonTitle: "", action: { actionType in
-                if actionType == "delete" {
-                    deletePost()
-                } else if actionType == "edit" {
-                    showEditPostView = true
-                }
-            }, isShowing: $showChangePostDialog)
+            ChangePostDialog(
+                buttonTitle: "",
+                action: { actionType in
+                    if actionType == "delete" {
+                        deletePost()
+                    } else if actionType == "edit" {
+                        showEditPostView = true
+                    }
+                },
+                userId: userId,
+                postId: postId,
+                isShowing: $showChangePostDialog
+            )
         }.navigationBarBackButtonHidden(true)
             .navigationBarHidden(true)
             .background(

@@ -81,7 +81,7 @@ struct User_ProfilePage: View {
                         .padding()
                         
                         VStack {
-                           // Text(userViewModel.user?.numberFollowing ?? "0")
+                            //Text(userViewModel.user?.numberFollowing ?? "0")
                              //   .font(.custom("DMSerifDisplay-Regular", size: 22))
                             Text("Following")
                                 .font(.system(size: 16))

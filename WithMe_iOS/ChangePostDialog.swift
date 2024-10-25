@@ -9,7 +9,10 @@ import SwiftUI
 struct ChangePostDialog: View {
     let buttonTitle: String
     let action: (String) -> ()
+    var userId: String
+    var postId: String
     @Binding var isShowing: Bool
+    @State private var navigateToEditPost = false
 
     var body: some View {
         ZStack{
