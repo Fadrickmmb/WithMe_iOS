@@ -96,7 +96,8 @@ struct Auth_LoginView: View {
                 NavigationLink(destination: TabView_WithMe(), isActive: $navigateToUser) {
                     EmptyView()
                 }
-            }
+            }.navigationBarBackButtonHidden(true)
+            .navigationBarHidden(true)
         }
     }
 

@@ -8,16 +8,18 @@
 import SwiftUI
 
 struct User_ViewProfile: View {
+    @Environment(\.presentationMode) var presentationMode
     @StateObject private var userViewModel = User_ViewModel()
     @StateObject private var postViewModel = Post_ProfileViewModel()
     @State private var navigateToEditProfile = false
     var userId: String
     
-
+    
     var body: some View {
         ZStack(alignment: .top) {
             ScrollView(.vertical) {
                 VStack {
+                    
                     HStack {
                         Image("withme_logo")
                             .resizable()
@@ -33,8 +35,8 @@ struct User_ViewProfile: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 30, height: 30)
                     }
-                    .padding()
-
+                    .padding(.top,80)
+                    
                     HStack {
                         if let photoUrl = userViewModel.user?.userPhotoUrl, !photoUrl.isEmpty {
                             AsyncImage(url: URL(string: photoUrl)){ image in
@@ -58,11 +60,11 @@ struct User_ViewProfile: View {
                         }
                     }
                     .padding()
-
+                    
                     Text(userViewModel.user?.name.uppercased() ?? "Loading...")
                         .font(.custom("DMSerifDisplay-Regular", size: 26))
                         .padding()
-
+                    
                     HStack {
                         VStack {
                             //Text(userViewModel.user?.numberFollowers ?? "0")
@@ -71,53 +73,77 @@ struct User_ViewProfile: View {
                                 .font(.system(size: 16))
                         }
                         .padding()
-
+                        
                         VStack {
-                            //Text(userViewModel.user?.numberPosts ?? "0")
-                            //    .font(.custom("DMSerifDisplay-Regular", size: 22))
+                            Text("\(postViewModel.postList.count)")
+                                .font(.custom("DMSerifDisplay-Regular", size: 22))
                             Text("Posts")
                                 .font(.system(size: 16))
                         }
                         .padding()
-
+                        
                         VStack {
                             //Text(userViewModel.user?.numberFollowing ?? "0")
-                             //   .font(.custom("DMSerifDisplay-Regular", size: 22))
+                            //   .font(.custom("DMSerifDisplay-Regular", size: 22))
                             Text("Following")
                                 .font(.system(size: 16))
                         }
                         .padding()
                     }
-
+                    
                     Text(userViewModel.user?.userBio ?? "No bio available")
                         .font(.custom("DMSerifDisplay-Regular", size: 26))
                         .padding()
-
-                    Button {
-                        navigateToEditProfile = true
-                    } label: {
-                        Text("Follow")
-                            .foregroundColor(.white)
-                            .font(.system(size: 16))
-                            .bold()
-                            .frame(maxWidth: 120, maxHeight: 20)
-                            .padding()
-                            .background(
-                                RoundedRectangle(cornerRadius: 24)
-                                    .fill(Color.black)
+                    
+                    HStack{
+                        Button {
+                            presentationMode.wrappedValue.dismiss()
+                        } label: {
+                            Text("Back")
+                                .foregroundColor(.white)
+                                .font(.system(size: 16))
+                                .bold()
+                                .frame(maxWidth: 120, maxHeight: 20)
+                                .padding()
+                                .background(
+                                    RoundedRectangle(cornerRadius: 24)
+                                        .fill(Color.black)
+                                )
+                                .padding(.horizontal)
+                        }.background(
+                            NavigationLink(
+                                destination: User_EditProfilePage(),
+                                isActive: $navigateToEditProfile,
+                                label: { EmptyView() }
                             )
-                            .padding(.horizontal)
-                    }.background(
-                        NavigationLink(
-                           destination: User_EditProfilePage(),
-                           isActive: $navigateToEditProfile,
-                           label: { EmptyView() }
                         )
-                    )
-
+                        Spacer()
+                        Button {
+                            //add follow function here
+                        } label: {
+                            Text("Follow")
+                                .foregroundColor(.white)
+                                .font(.system(size: 16))
+                                .bold()
+                                .frame(maxWidth: 120, maxHeight: 20)
+                                .padding()
+                                .background(
+                                    RoundedRectangle(cornerRadius: 24)
+                                        .fill(Color.black)
+                                )
+                                .padding(.horizontal)
+                        }.background(
+                            NavigationLink(
+                                destination: User_EditProfilePage(),
+                                isActive: $navigateToEditProfile,
+                                label: { EmptyView() }
+                            )
+                        )
+                    }
+                    
                     VStack(alignment: .leading) {
                         ForEach(postViewModel.postList) { post in
-                            NavigationLink(destination: User_PostPartialView(
+                            NavigationLink(destination: User_PostView(
                                 postId: post.postId,
                                 userId: post.userId,
                                 name: post.name,
@@ -126,7 +152,8 @@ struct User_ViewProfile: View {
                                 postDate: post.postDate,
                                 yummys: post.yummys,
                                 comments: post.commentsNumber,
-                                location: post.location
+                                location: post.location,
+                                content: post.content
                             )) {
                                 User_PostPartialView(
                                     postId: post.postId,
@@ -146,9 +173,8 @@ struct User_ViewProfile: View {
                     .padding(.top)
                 }
                 .padding(.top, 0)
-            }
-        }
-        .onAppear {
+            }.edgesIgnoringSafeArea(.all)
+        }.onAppear {
             userViewModel.fetchUser(userId: userId)
             postViewModel.fetchProfileData(userId: userId)
         }.navigationBarBackButtonHidden(true)

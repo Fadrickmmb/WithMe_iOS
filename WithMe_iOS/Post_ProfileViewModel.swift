@@ -61,7 +61,6 @@ class Post_ProfileViewModel: ObservableObject {
             }
             DispatchQueue.main.async {
                 self.postList = posts
-                print("Total posts loaded: \(posts.count)")
             }
         }
     }
