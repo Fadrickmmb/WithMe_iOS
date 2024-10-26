@@ -154,21 +154,21 @@ struct User_PostView: View {
                     }
                     
                     HStack{
-                        Button {
-                            presentationMode.wrappedValue.dismiss()
-                        } label: {
+                        NavigationLink(
+                            destination: TabView_WithMe())
+                        {
                             Text("Back")
                                 .foregroundColor(.white)
                                 .font(.system(size: 16))
                                 .bold()
-                                .frame(maxWidth: 100, maxHeight: 20)
+                                .frame(maxWidth: 120, maxHeight: 20)
                                 .padding()
                                 .background(
                                     RoundedRectangle(cornerRadius: 24)
                                         .fill(Color.black)
                                 )
                                 .padding(.horizontal)
-                            }.buttonStyle(PlainButtonStyle())
+                        }
                         
                         Button {
                             showCommentDialog = true

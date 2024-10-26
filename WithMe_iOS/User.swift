@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct User: Identifiable, Codable {
     var name: String
     var email: String
@@ -37,8 +36,9 @@ struct User: Identifiable, Codable {
         self.userBio = nil
         self.posts = [:]
         self.following = [:]
-        self.followers = [:]    }
-
+        self.followers = [:]
+    }
+    
     init(name: String, email: String, id: String, userPhotoUrl: String, userBio: String) {
         self.name = name
         self.email = email
@@ -48,5 +48,15 @@ struct User: Identifiable, Codable {
         self.posts = [:]
         self.following = [:]
         self.followers = [:]
+    }
+    
+    init(name: String, email: String, id: String, userPhotoUrl: String, userBio: String, following: [String: Bool] = [:], followers: [String: Bool] = [:]) {
+        self.name = name
+        self.email = email
+        self.id = id
+        self.userPhotoUrl = userPhotoUrl
+        self.userBio = userBio
+        self.following = following
+        self.followers = followers
     }
 }
