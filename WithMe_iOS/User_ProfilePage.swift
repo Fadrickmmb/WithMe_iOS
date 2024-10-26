@@ -82,7 +82,7 @@ struct User_ProfilePage: View {
                         }
                         .padding()
                         
-                        NavigationLink(destination: User_Followers(currentUserId: currentUserId)){
+                        NavigationLink(destination: User_Following(currentUserId: currentUserId)){
                             VStack{
                                 Text("\(userViewModel.user?.following.count ?? 0)")
                                     .font(.custom("DMSerifDisplay-Regular", size: 22))

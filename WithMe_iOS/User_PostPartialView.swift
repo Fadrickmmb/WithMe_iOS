@@ -21,6 +21,8 @@ struct User_PostPartialView: View {
     var location: String
     @State private var showChangePostDialog = false
     @State private var showEditPostView = false
+    @State private var isCurrentUser = false
+    @State private var showReportPostDialog = false
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -61,7 +63,16 @@ struct User_PostPartialView: View {
                     Circle().frame(width: 7, height: 7)
                     Circle().frame(width: 7, height: 7)
                 }.onTapGesture {
-                    showChangePostDialog = true
+                    guard let currentUserId = Auth.auth().currentUser?.uid else {
+                        return
+                    }
+                    if (userId == currentUserId){
+                        isCurrentUser = true
+                        showChangePostDialog = true
+                    } else {
+                        isCurrentUser = false
+                        showReportPostDialog = true
+                    }
                 }
             }
             .padding(.vertical)
@@ -112,6 +123,16 @@ struct User_PostPartialView: View {
             .padding(.vertical)
         }
         .padding()
+        .sheet(isPresented: $showReportPostDialog) {
+            ReportPostDialog(
+                buttonTitle: "",
+                action: {actionType in
+                    //reportPost()
+                },
+                userId: userId,
+                postId: postId,
+                isShowing: $showReportPostDialog)
+        }
         .sheet(isPresented: $showChangePostDialog) {
             ChangePostDialog(
                 buttonTitle: "",

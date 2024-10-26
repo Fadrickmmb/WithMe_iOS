@@ -6,13 +6,16 @@
 //
 
 import SwiftUI
+import FirebaseAuth
+import FirebaseDatabase
 
 struct User_ViewProfile: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject private var userViewModel = User_ViewModel()
     @StateObject private var postViewModel = Post_ProfileViewModel()
     @State private var navigateToEditProfile = false
-    var userId: String    
+    @State private var isFollowing = false
+    var userId: String
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -112,9 +115,9 @@ struct User_ViewProfile: View {
                         }
                         Spacer()
                         Button {
-                            //add follow function here
+                            changeFollowStatus()
                         } label: {
-                            Text("Follow")
+                            Text(isFollowing ? "Unfollow" : "Follow")
                                 .foregroundColor(.white)
                                 .font(.system(size: 16))
                                 .bold()
@@ -168,9 +171,47 @@ struct User_ViewProfile: View {
                 .padding(.top, 0)
             }.edgesIgnoringSafeArea(.all)
         }.onAppear {
+            checkFollowStatus()
             userViewModel.fetchUser(userId: userId)
             postViewModel.fetchProfileData(userId: userId)
         }.navigationBarBackButtonHidden(true)
+    }
+    
+    private func changeFollowStatus(){
+        guard let currentUserId = Auth.auth().currentUser?.uid else {
+            return
+        }
+        let currentUserRef = Database.database().reference().child("users").child(currentUserId)
+        let visitedUserRef = Database.database().reference().child("users").child(userId)
+        
+        let followingRef = currentUserRef.child("following").child(userId)
+        let followersRef = visitedUserRef.child("followers").child(currentUserId)
+        
+        followingRef.observeSingleEvent(of: .value){snapshot in
+            if(snapshot.exists()){
+                followingRef.removeValue()
+                followersRef.removeValue()
+                isFollowing = false
+            } else {
+                followingRef.setValue(true)
+                followersRef.setValue(true)
+                isFollowing = true
+            }
+        }
+    }
+    
+    private func checkFollowStatus(){
+        guard let currentUserId = Auth.auth().currentUser?.uid else {
+            return
+        }
+        let currentUserRef = Database.database().reference().child("users").child(currentUserId)
+        currentUserRef.child("following").child(userId).observeSingleEvent(of: .value){snapshot in
+            if(snapshot.exists()){
+                isFollowing = true
+            } else {
+                isFollowing = false
+            }
+        }
     }
 }
 //#Preview {

@@ -78,7 +78,6 @@ struct User_Following: View {
         .padding(.leading, 10)
         .padding(.trailing, 10)
         .onAppear {
-            print("Fetching followers for user ID: \(currentUserId)")
             followingViewModel.fetchFollowing(userId: currentUserId)
         }
         .navigationBarBackButtonHidden(true)
