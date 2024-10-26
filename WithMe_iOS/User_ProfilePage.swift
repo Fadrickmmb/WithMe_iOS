@@ -65,11 +65,13 @@ struct User_ProfilePage: View {
                         .padding().fixedSize(horizontal: true, vertical: false)
                     
                     HStack {
-                        VStack {
-                            //Text(userViewModel.user?.numberFollowers ?? "0")
-                                //.font(.custom("DMSerifDisplay-Regular", size: 22))
-                            Text("Followers")
-                                .font(.system(size: 16))
+                        NavigationLink(destination: User_Followers(currentUserId: currentUserId)){
+                            VStack {
+                                Text("\(userViewModel.user?.followers.count ?? 0)")
+                                    .font(.custom("DMSerifDisplay-Regular", size: 22))
+                                Text("Followers")
+                                    .font(.system(size: 16))
+                            }
                         }
                         .padding()
                         
@@ -80,13 +82,15 @@ struct User_ProfilePage: View {
                         }
                         .padding()
                         
-                        VStack {
-                            //Text(userViewModel.user?.numberFollowing ?? "0")
-                             //   .font(.custom("DMSerifDisplay-Regular", size: 22))
-                            Text("Following")
-                                .font(.system(size: 16))
+                        NavigationLink(destination: User_Followers(currentUserId: currentUserId)){
+                            VStack{
+                                Text("\(userViewModel.user?.following.count ?? 0)")
+                                    .font(.custom("DMSerifDisplay-Regular", size: 22))
+                                Text("Following")
+                                    .font(.system(size: 16))
+                            }
+                            .padding()
                         }
-                        .padding()
                     }
                     
                     Text("Bio").font(.custom("DMSerifDisplay-Regular", size: 22))

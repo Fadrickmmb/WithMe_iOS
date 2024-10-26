@@ -12,8 +12,7 @@ struct User_ViewProfile: View {
     @StateObject private var userViewModel = User_ViewModel()
     @StateObject private var postViewModel = Post_ProfileViewModel()
     @State private var navigateToEditProfile = false
-    var userId: String
-    
+    var userId: String    
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -67,8 +66,8 @@ struct User_ViewProfile: View {
                     
                     HStack {
                         VStack {
-                            //Text(userViewModel.user?.numberFollowers ?? "0")
-                            //    .font(.custom("DMSerifDisplay-Regular", size: 22))
+                            Text("\(userViewModel.user?.followers.count ?? 0)")
+                                .font(.custom("DMSerifDisplay-Regular", size: 22))
                             Text("Followers")
                                 .font(.system(size: 16))
                         }
@@ -83,8 +82,8 @@ struct User_ViewProfile: View {
                         .padding()
                         
                         VStack {
-                            //Text(userViewModel.user?.numberFollowing ?? "0")
-                            //   .font(.custom("DMSerifDisplay-Regular", size: 22))
+                            Text("\(userViewModel.user?.following.count ?? 0)")
+                               .font(.custom("DMSerifDisplay-Regular", size: 22))
                             Text("Following")
                                 .font(.system(size: 16))
                         }
@@ -96,9 +95,9 @@ struct User_ViewProfile: View {
                         .padding()
                     
                     HStack{
-                        Button {
-                            presentationMode.wrappedValue.dismiss()
-                        } label: {
+                        NavigationLink(
+                            destination: TabView_WithMe())
+                        {
                             Text("Back")
                                 .foregroundColor(.white)
                                 .font(.system(size: 16))
@@ -110,13 +109,7 @@ struct User_ViewProfile: View {
                                         .fill(Color.black)
                                 )
                                 .padding(.horizontal)
-                        }.background(
-                            NavigationLink(
-                                destination: User_EditProfilePage(),
-                                isActive: $navigateToEditProfile,
-                                label: { EmptyView() }
-                            )
-                        )
+                        }
                         Spacer()
                         Button {
                             //add follow function here
