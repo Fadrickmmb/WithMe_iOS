@@ -9,7 +9,18 @@ import SwiftUI
 
 struct Mod_HomePage: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            Text("Mod Home Page")
+            NavigationLink(
+                destination: Mod_SearchPage()){
+                    Text("To Search")
+                        .font(.system(size: 16))
+                        .padding(.top, 10)
+            }
+                .navigationBarBackButtonHidden(true)
+            
+            
+        }
     }
 }
 

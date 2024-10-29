@@ -17,6 +17,7 @@ struct Auth_LoginView: View {
     @State private var isAdmin: Bool = false
     @State private var navigateToAdmin: Bool = false
     @State private var navigateToUser: Bool = false
+    @State private var navigateToMod: Bool = false
     @State private var userId: String?
 
     var body: some View {
@@ -93,6 +94,9 @@ struct Auth_LoginView: View {
                 NavigationLink(destination: Admin_HomePage(), isActive: $navigateToAdmin) {
                     EmptyView()
                 }
+                NavigationLink(destination: Mod_HomePage(), isActive: $navigateToMod){
+                    EmptyView()
+                }
                 NavigationLink(destination: TabView_WithMe(), isActive: $navigateToUser) {
                     EmptyView()
                 }
@@ -101,6 +105,7 @@ struct Auth_LoginView: View {
         }
     }
 
+    
     func loginUser() {
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
             if let error = error {
@@ -120,16 +125,23 @@ struct Auth_LoginView: View {
             if snapshot.exists() {
                 navigateToAdmin = true
             } else {
-                dbRef.child("users").queryOrdered(byChild: "email").queryEqual(toValue: email).observeSingleEvent(of: .value) { snapshot in
+                dbRef.child("mod").queryOrdered(byChild: "email").queryEqual(toValue: email).observeSingleEvent(of: .value) { snapshot in
                     if snapshot.exists() {
-                        navigateToUser = true
+                        navigateToMod = true
                     } else {
-                        loginError = "User not found"
+                        dbRef.child("users").queryOrdered(byChild: "email").queryEqual(toValue: email).observeSingleEvent(of: .value) { snapshot in
+                            if snapshot.exists() {
+                                navigateToUser = true
+                            } else {
+                                loginError = "User not found"
+                            }
+                        }
                     }
                 }
             }
         }
     }
+
 }
 
 #Preview {
