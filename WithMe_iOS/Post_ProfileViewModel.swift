@@ -53,7 +53,10 @@ class Post_ProfileViewModel: ObservableObject {
                             location: location,
                             postDate: postDate,
                             commentsNumber: commentsNumber,
-                            content: content
+                            content: content,
+                            latitude: 0.0,
+                            longitude: 0.0
+
                         )
                         posts.append(post)
                     }

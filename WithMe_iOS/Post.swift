@@ -20,6 +20,8 @@ struct Post: Identifiable {
     var postDate: String
     var commentsNumber: Int
     var content: String
+    var latitude: Double
+    var longitude: Double
     
     init(postId: String, userId: String, name: String, postImageUrl: String, userPhotoUrl: String, yummys: Int, location: String, postDate: String, commentsNumber: Int, content: String) {
         self.postId = postId
@@ -32,5 +34,7 @@ struct Post: Identifiable {
         self.postDate = postDate
         self.commentsNumber = commentsNumber
         self.content = content
+        self.latitude = latitude
+        self.longitude = longitude
     }
 }

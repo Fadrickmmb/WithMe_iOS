@@ -1,16 +1,10 @@
-//
-//  Admin_HomePage.swift
-//  WithMe_iOS
-//
-//  Created by Fadrick Barroso on 2024-10-06.
-
 import SwiftUI
 import Firebase
 import FirebaseDatabase
 import FirebaseAuth
 import MapKit
 
-struct Admin_HomePage: View {
+struct Mod_HomePage: View {
 
     @State private var posts: [Post] = []
     @State private var isLoading = true
@@ -48,7 +42,7 @@ struct Admin_HomePage: View {
                     ScrollView {
                         LazyVStack {
                             ForEach(posts) { post in
-                                Admin_PostView(post: post, onLocationTap: {
+                                Mod_PostView(post: post, onLocationTap: {
                                     selectedPost = post
                                     isMapPresented = true
                                 })
@@ -75,7 +69,7 @@ struct Admin_HomePage: View {
             return
         }
 
-        let ref = Database.database().reference().child("admin").child(userId).child("posts")
+        let ref = Database.database().reference().child("mod").child(userId).child("posts")
 
         ref.observeSingleEvent(of: .value, with: { snapshot in
             var fetchedPosts: [Post] = []
@@ -121,5 +115,5 @@ struct Admin_HomePage: View {
 }
 
 #Preview {
-    Admin_HomePage()
+    Mod_HomePage()
 }
