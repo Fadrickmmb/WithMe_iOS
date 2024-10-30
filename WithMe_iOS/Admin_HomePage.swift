@@ -9,7 +9,27 @@ import SwiftUI
 
 struct Admin_HomePage: View {
     var body: some View {
-        Text("Admin Home Page")
+        VStack{
+            Text("Admin Home Page")
+            NavigationLink(
+                destination: Admin_SearchPage()){
+                    Text("To Search")
+                        .font(.system(size: 16))
+                        .padding(.top, 10)
+            }
+                .navigationBarBackButtonHidden(true)
+            
+            NavigationLink(
+                destination: Admin_CreateUser()){
+                    Text("Create User")
+                        .font(.system(size: 16))
+                        .padding(.top, 10)
+                }
+                .navigationBarBackButtonHidden(true)
+            
+        }
+        
+        
     }
 }
 

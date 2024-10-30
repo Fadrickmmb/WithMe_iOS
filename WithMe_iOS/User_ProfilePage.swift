@@ -65,7 +65,7 @@ struct User_ProfilePage: View {
                         .padding().fixedSize(horizontal: true, vertical: false)
                     
                     HStack {
-                        NavigationLink(destination: User_Followers(currentUserId: currentUserId)){
+                       NavigationLink(destination: User_Followers(currentUserId: currentUserId)){
                             VStack {
                                 Text("\(userViewModel.user?.followers.count ?? 0)")
                                     .font(.custom("DMSerifDisplay-Regular", size: 22))
