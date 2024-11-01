@@ -17,12 +17,13 @@ struct User_PostPartialView: View {
     var userPhotoUrl: String
     var postDate: String
     var yummys: Int
-    var comments: Int
     var location: String
+    var commentsNumber: Int
     @State private var showChangePostDialog = false
     @State private var showEditPostView = false
     @State private var isCurrentUser = false
     @State private var showReportPostDialog = false
+    @ObservedObject var commentViewModel = CommentsViewModel()
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -111,7 +112,7 @@ struct User_PostPartialView: View {
                     Image("withme_comment")
                         .resizable()
                         .frame(width: 25, height: 25)
-                    Text("\(comments)")
+                    Text("\(commentViewModel.commentsNumber)")
                         .font(.system(size: 12))
                 }
 
@@ -121,6 +122,8 @@ struct User_PostPartialView: View {
                     .font(.system(size: 12))
             }
             .padding(.vertical)
+        }.onAppear(){
+            commentViewModel.fetchComments(userId: userId, postId: postId)
         }
         .padding()
         .sheet(isPresented: $showReportPostDialog) {

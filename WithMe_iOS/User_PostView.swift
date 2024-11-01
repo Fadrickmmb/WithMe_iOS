@@ -18,7 +18,7 @@ struct User_PostView: View {
     var userPhotoUrl: String
     var postDate: String
     var yummys: Int
-    var comments: Int
+    var commentsNumber: Int
     var location: String
     var content: String
     @StateObject var commentViewModel = CommentsViewModel()
@@ -115,7 +115,7 @@ struct User_PostView: View {
                             Image("withme_comment")
                                 .resizable()
                                 .frame(width: 25, height: 25)
-                            Text("\(comments)")
+                            Text("\(commentViewModel.commentsNumber)")
                                 .font(.system(size: 12))
                         }
 
@@ -172,7 +172,7 @@ struct User_PostView: View {
                         
                         Button {
                             showCommentDialog = true
-                        } label: {
+                        } label: {	
                             Text("Comment")
                                 .foregroundColor(.white)
                                 .font(.system(size: 16))

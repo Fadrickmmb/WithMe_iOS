@@ -11,6 +11,7 @@ import FirebaseDatabase
 
 class CommentsViewModel: ObservableObject {
     @Published var comments: [Comment] = []
+    @Published var commentsNumber: Int = 0
     private var reference: DatabaseReference = Database.database().reference()
 
     func fetchComments(userId: String, postId: String) {
@@ -19,6 +20,9 @@ class CommentsViewModel: ObservableObject {
 
             guard snapshot.childrenCount > 0 else {
                 print("No comments found.")
+                DispatchQueue.main.sync {
+                    self.commentsNumber = 0
+                }
                 return
             }
 
@@ -46,6 +50,7 @@ class CommentsViewModel: ObservableObject {
             
             DispatchQueue.main.async {
                 self.comments = fetchedComments
+                self.commentsNumber = fetchedComments.count
             }
         }
     }

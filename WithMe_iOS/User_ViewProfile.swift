@@ -147,7 +147,7 @@ struct User_ViewProfile: View {
                                 userPhotoUrl: post.userPhotoUrl,
                                 postDate: post.postDate,
                                 yummys: post.yummys,
-                                comments: post.commentsNumber,
+                                commentsNumber: post.commentsNumber,
                                 location: post.location,
                                 content: post.content
                             )) {
@@ -159,8 +159,8 @@ struct User_ViewProfile: View {
                                     userPhotoUrl: post.userPhotoUrl,
                                     postDate: post.postDate,
                                     yummys: post.yummys,
-                                    comments: post.commentsNumber,
-                                    location: post.location
+                                    location: post.location,
+                                    commentsNumber: post.commentsNumber
                                 )
                             }
                             .buttonStyle(PlainButtonStyle())
