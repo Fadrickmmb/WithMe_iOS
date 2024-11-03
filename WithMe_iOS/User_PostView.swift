@@ -136,20 +136,27 @@ struct User_PostView: View {
                     } else {
                         VStack(alignment: .leading) {
                             ForEach(commentViewModel.comments) {comment in
-                                VStack(alignment: .leading){
-                                    HStack {
-                                        Text(comment.name)
-                                            .fontWeight(.bold)
+                                HStack{
+                                    VStack(alignment: .leading){
+                                        HStack {
+                                            Text(comment.name)
+                                                .fontWeight(.bold)
+                                                .font(.system(size: 16))
+                                                .padding(.trailing, 10)
+                                            Text(comment.date)
+                                                .font(.system(size: 16))
+                                        }
+                                        Text(comment.text)
                                             .font(.system(size: 16))
-                                            .padding(.trailing, 10)
-                                        Text(comment.date)
-                                            .font(.system(size: 16))
+                                            .padding(.bottom,5)
                                     }
-                                    Text(comment.text)
-                                        .font(.system(size: 16))
-                                        .padding(.bottom,5)
-                                }
                                     
+                                    Spacer()
+                                    
+                                    VStack(alignment: .leading){
+                                        Image(systemName: "exclamationmark.triangle")
+                                    }
+                                }
                             }.padding(.top, 10)
                         }.padding(0)
                     }

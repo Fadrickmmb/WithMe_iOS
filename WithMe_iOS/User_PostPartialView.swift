@@ -23,6 +23,8 @@ struct User_PostPartialView: View {
     @State private var showEditPostView = false
     @State private var isCurrentUser = false
     @State private var showReportPostDialog = false
+    @State private var showAlert = false
+    @State private var alertMessage = ""
     @ObservedObject var commentViewModel = CommentsViewModel()
     
     var body: some View {
@@ -130,7 +132,7 @@ struct User_PostPartialView: View {
             ReportPostDialog(
                 buttonTitle: "",
                 action: {actionType in
-                    //reportPost()
+                    reportPost()
                 },
                 userId: userId,
                 postId: postId,
@@ -153,14 +155,16 @@ struct User_PostPartialView: View {
         }.navigationBarBackButtonHidden(true)
             .navigationBarHidden(true)
             .background(
-            NavigationLink(
-                destination: EditPostView(postId: postId),
-                isActive: $showEditPostView,
-                label: {
-                    EmptyView()
-                }
-            )
-        )
+                NavigationLink (
+                    destination: EditPostView(postId: postId),
+                    isActive: $showEditPostView,
+                    label: {
+                        EmptyView()
+                    }
+                )
+            ).alert(isPresented: $showAlert) {
+                Alert(title: Text("Report status"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+            }
     }
     
     func deletePost(){
@@ -173,6 +177,34 @@ struct User_PostPartialView: View {
                 print("Post deleted successfuly.")
             }
             
+        }
+    }
+    
+    func reportPost(){
+        let reportPostRef = Database.database().reference().child("reportedPosts")
+        let reportId = reportPostRef.childByAutoId().key
+        
+        guard let reportId = reportId, let loggedUserId = Auth.auth().currentUser?.uid else {
+            alertMessage = "Failed to report post."
+            showAlert = true
+            return
+        }
+        
+        let reportPostInfo: [String: Any] = [
+            "reportId": reportId,
+            "postId": postId,
+            "postOwnerId": userId,
+            "userReportingId": loggedUserId
+        ]
+        
+        reportPostRef.child(reportId).setValue(reportPostInfo){ error, _ in
+            if let error = error {
+                alertMessage = "Error reporting post: \(error.localizedDescription)"
+                showAlert = true
+            } else {
+                alertMessage = "Post reported successfully."
+                showAlert = true
+            }
         }
     }
 }
