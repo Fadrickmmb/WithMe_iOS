@@ -26,6 +26,14 @@ struct Admin_HomePage: View {
                 }
                 .navigationBarBackButtonHidden(true)
             
+            NavigationLink(
+                destination: Admin_ProfilePage()){
+                    Text("Profile Page")
+                        .font(.system(size: 16))
+                        .padding(.top, 10)
+                }
+                .navigationBarBackButtonHidden(true)
+            
         }
         
         

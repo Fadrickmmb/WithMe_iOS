@@ -9,7 +9,11 @@ import SwiftUI
 
 struct Admin_ProfilePage: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationLink(destination: Admin_Dashboard()) {
+            Text("To Dashboard")
+                .font(.system(size: 16))
+            
+        }
     }
 }
 

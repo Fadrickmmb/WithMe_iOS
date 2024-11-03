@@ -9,7 +9,7 @@ import SwiftUI
 
 struct User_SuspensionPage: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("YOU HAVE BEEN SUSPENDED")
     }
 }
 
