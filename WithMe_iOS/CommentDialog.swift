@@ -22,10 +22,10 @@ struct CommentDialog: View {
                     Button(action: {
                         isShowing = false
                     }) {
-                    Image(systemName: "xmark")
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .padding(20)
+                        Image(systemName: "xmark")
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .padding(20)
                     }
                 }
                 Spacer()
@@ -33,11 +33,11 @@ struct CommentDialog: View {
                     .font(.title2)
                     .bold()
                     .padding()
-
+                
                 TextField("Enter your comment", text: $commentText)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
-
+                
                 Button {
                     action()
                 } label: {
@@ -53,6 +53,8 @@ struct CommentDialog: View {
             .padding()
             .background(Color.white)
             .clipShape(RoundedRectangle(cornerRadius: 20))
-            .shadow(radius: 20)        }.navigationBarBackButtonHidden(true)
-        .navigationBarHidden(true)    }
+            .shadow(radius: 20)
+        }.navigationBarBackButtonHidden(true)
+            .navigationBarHidden(true)
+    }
 }

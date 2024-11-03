@@ -22,6 +22,7 @@ struct User_PostView: View {
     var location: String
     var content: String
     @StateObject var commentViewModel = CommentsViewModel()
+    @State private var loggedUserName: String = ""
     @State private var currentUserId: String = ""
     @State private var showCommentDialog = false
     @State private var commentText: String = ""
@@ -190,6 +191,13 @@ struct User_PostView: View {
                     if let user = Auth.auth().currentUser{
                         currentUserId = user.uid
                         commentViewModel.fetchComments(userId: userId, postId: postId)
+                        let userRef = Database.database().reference()
+                        userRef.child("users").child(currentUserId).observeSingleEvent(of: .value) {snapshot in
+                            if let userInfo = snapshot.value as? [String: Any],
+                               let name = userInfo["name"] as? String{
+                                loggedUserName = name
+                            }
+                        }
                     }
                 }.navigationBarBackButtonHidden(true)
                     .navigationBarHidden(true)
@@ -210,7 +218,7 @@ struct User_PostView: View {
         let commentId = UUID().uuidString
         let date = DateFormatter.localizedString(from: Date(), dateStyle: .medium, timeStyle: .short)
         let comment = Comment(
-            name: name,
+            name: loggedUserName,
             text: commentText,
             date: date,
             userId: currentUserId,
