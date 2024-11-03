@@ -95,7 +95,7 @@ struct Auth_LoginView: View {
                 NavigationLink(destination: Admin_TabView(), isActive: $navigateToAdmin) {
                     EmptyView()
                 }
-                NavigationLink(destination: Mod_HomePage(), isActive: $navigateToMod){
+                NavigationLink(destination: Mod_TabView(), isActive: $navigateToMod){
                     EmptyView()
                 }
                 NavigationLink(destination: TabView_WithMe(), isActive: $navigateToUser) {
