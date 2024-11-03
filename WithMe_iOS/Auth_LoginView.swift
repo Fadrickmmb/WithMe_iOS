@@ -18,6 +18,7 @@ struct Auth_LoginView: View {
     @State private var navigateToAdmin: Bool = false
     @State private var navigateToUser: Bool = false
     @State private var navigateToMod: Bool = false
+    @State private var navigateToSusp: Bool = false
     @State private var userId: String?
 
     var body: some View {
@@ -100,6 +101,9 @@ struct Auth_LoginView: View {
                 NavigationLink(destination: TabView_WithMe(), isActive: $navigateToUser) {
                     EmptyView()
                 }
+                NavigationLink(destination: User_SuspensionPage(), isActive: $navigateToSusp) {
+                    EmptyView()
+                }
             }.navigationBarBackButtonHidden(true)
             .navigationBarHidden(true)
         }
@@ -130,8 +134,18 @@ struct Auth_LoginView: View {
                         navigateToMod = true
                     } else {
                         dbRef.child("users").queryOrdered(byChild: "email").queryEqual(toValue: email).observeSingleEvent(of: .value) { snapshot in
-                            if snapshot.exists() {
-                                navigateToUser = true
+                            if snapshot.exists(), let userSnapshot = snapshot.children.allObjects.first as? DataSnapshot {
+                                if let userId = userSnapshot.childSnapshot(forPath: "id").value as? String {
+                                    dbRef.child("suspendedUsers").child(userId).observeSingleEvent(of: .value) { suspendedSnapshot in
+                                        if suspendedSnapshot.exists() {
+                                            navigateToSusp = true
+                                        } else {
+                                            navigateToUser = true
+                                        }
+                                    }
+                                } else {
+                                    loginError = "User ID not found"
+                                }
                             } else {
                                 loginError = "User not found"
                             }
@@ -141,6 +155,9 @@ struct Auth_LoginView: View {
             }
         }
     }
+
+
+
 
 }
 
