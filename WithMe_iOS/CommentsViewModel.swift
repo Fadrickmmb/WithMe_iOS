@@ -7,7 +7,7 @@
 import Foundation
 import FirebaseDatabase
 
-// Dict refers to a swift dictionary, similar to map<key, value> in android
+// Dict refers to a swift dictionary, similar to map<key, value> in android, i am using dict here but in the other codes i used dictionary to be easier to identify
 
 class CommentsViewModel: ObservableObject {
     @Published var comments: [Comment] = []
