@@ -81,7 +81,7 @@ struct Admin_SearchPage: View {
             Spacer()
             
             HStack {
-                NavigationLink(destination: User_HomePage()) {
+                NavigationLink(destination: Admin_HomePage()) {
                     Text("Back to Home Screen")
                         .font(.system(size: 16))
                         .padding(.top, 10)
