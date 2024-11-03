@@ -26,6 +26,11 @@ struct User_PostView: View {
     @State private var currentUserId: String = ""
     @State private var showCommentDialog = false
     @State private var commentText: String = ""
+    @State private var showReportCommentDialog = false
+    @State private var selectedCommentId: String = ""
+    @State private var selectedCommentOwnerId: String = ""
+    @State private var showAlert = false
+    @State private var alertMessage = ""
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -51,9 +56,9 @@ struct User_PostView: View {
                         if let url = URL(string: userPhotoUrl), !userPhotoUrl.isEmpty {
                             AsyncImage(url: url) { image in
                                 image.resizable()
-                                     .aspectRatio(contentMode: .fill)
-                                     .frame(width: 50, height: 50)
-                                     .clipShape(Circle())
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 50, height: 50)
+                                    .clipShape(Circle())
                             } placeholder: {
                                 Image(systemName: "person.fill")
                                     .resizable()
@@ -68,7 +73,7 @@ struct User_PostView: View {
                                 .frame(width: 50, height: 50)
                                 .clipShape(Circle())
                         }
-
+                        
                         VStack(alignment: .leading) {
                             Text(name)
                                 .font(.custom("DMSerifDisplay-Regular", size: 20))
@@ -81,13 +86,13 @@ struct User_PostView: View {
                         Spacer()
                     }
                     .padding(.vertical, 5)
-
+                    
                     if let imageUrl = URL(string: postImageUrl), !postImageUrl.isEmpty {
                         AsyncImage(url: imageUrl) { image in
                             image.resizable()
-                                 .aspectRatio(contentMode: .fill)
-                                 .frame(maxHeight: 250)
-                                 .clipped()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(maxHeight: 250)
+                                .clipped()
                         } placeholder: {
                             Image(systemName: "camera")
                                 .resizable()
@@ -100,7 +105,7 @@ struct User_PostView: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 50, height: 50)
                     }
-
+                    
                     HStack {
                         HStack {
                             Image("withme_yummy")
@@ -109,9 +114,9 @@ struct User_PostView: View {
                             Text("\(yummys)")
                                 .font(.system(size: 12))
                         }
-
+                        
                         Spacer()
-
+                        
                         HStack {
                             Image("withme_comment")
                                 .resizable()
@@ -119,9 +124,9 @@ struct User_PostView: View {
                             Text("\(commentViewModel.commentsNumber)")
                                 .font(.system(size: 12))
                         }
-
+                        
                         Spacer()
-
+                        
                         Text(postDate)
                             .font(.system(size: 12))
                     }
@@ -155,7 +160,12 @@ struct User_PostView: View {
                                     
                                     VStack(alignment: .leading){
                                         Image(systemName: "exclamationmark.triangle")
-                                    }
+                                    }.padding(.horizontal,5)
+                                        .onTapGesture {
+                                            selectedCommentId = comment.commentId
+                                            selectedCommentOwnerId = comment.userId
+                                            showReportCommentDialog = true
+                                        }
                                 }
                             }.padding(.top, 10)
                         }.padding(0)
@@ -180,7 +190,7 @@ struct User_PostView: View {
                         
                         Button {
                             showCommentDialog = true
-                        } label: {	
+                        } label: {
                             Text("Comment")
                                 .foregroundColor(.white)
                                 .font(.system(size: 16))
@@ -193,7 +203,7 @@ struct User_PostView: View {
                                 )
                                 .padding(.horizontal)
                         }.buttonStyle(PlainButtonStyle()).padding()
-                       }
+                    }
                 }.onAppear{
                     if let user = Auth.auth().currentUser{
                         currentUserId = user.uid
@@ -207,12 +217,19 @@ struct User_PostView: View {
                         }
                     }
                 }.navigationBarBackButtonHidden(true)
-                    .navigationBarHidden(true)
-                 .sheet(isPresented: $showCommentDialog) {
+                .navigationBarHidden(true)
+                .sheet(isPresented: $showCommentDialog) {
                     CommentDialog(commentText: $commentText, isShowing: $showCommentDialog, buttonTitle: "Comment"){
-                    addComment()
-                        }
-                 }            }
+                        addComment()
+                    }
+                }.sheet(isPresented: $showReportCommentDialog) {
+                    ReportCommentDialog(buttonTitle: "REPORT", action: { _ in
+                        reportComment(commentId: selectedCommentId, commentOwnerId: selectedCommentOwnerId)
+                    }, userId: userId, postId: postId, isShowing: $showReportCommentDialog)
+                }
+                .alert(isPresented: $showAlert) {
+                    Alert(title: Text("ReportStatus"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                }            }
         }.padding(.leading,10)
          .padding(.trailing,10)
     }
@@ -245,5 +262,35 @@ struct User_PostView: View {
         commentViewModel.fetchComments(userId: userId, postId: postId)
         commentText = ""
         showCommentDialog = false
+    }
+    
+    func reportComment(commentId: String, commentOwnerId: String){
+        let reportCommentRef = Database.database().reference().child("reportedComments")
+        let reportId = reportCommentRef.childByAutoId().key
+        
+        guard let reportId = reportId, let loggedUserId = Auth.auth().currentUser?.uid else{
+            alertMessage = "Error reporting comment."
+            showAlert = true
+            return
+        }
+        
+        let reportCommentInfo: [String: Any] = [
+            "reportId": reportId,
+            "postId": postId,
+            "commentId": commentId,
+            "postOwnerId": userId,
+            "commentOwnerId": commentOwnerId,
+            "userReportingId": loggedUserId
+        ]
+        
+        reportCommentRef.child(reportId).setValue(reportCommentInfo){error, _ in
+            if let error = error {
+                alertMessage = "Error reporting comment: \(error.localizedDescription)"
+                showAlert = true
+            } else {
+                alertMessage = "Comment reported successfully."
+                showAlert = true
+            }
+        }
     }
 }

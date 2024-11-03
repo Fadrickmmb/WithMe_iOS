@@ -92,7 +92,6 @@ struct User_ViewProfile: View {
                             Text("Following")
                                 .font(.system(size: 16))
                         }
-                        .padding()
                     }
                     
                     Text(userViewModel.user?.userBio ?? "No bio available")
