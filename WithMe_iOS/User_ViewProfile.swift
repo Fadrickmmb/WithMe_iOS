@@ -15,6 +15,8 @@ struct User_ViewProfile: View {
     @StateObject private var postViewModel = Post_ProfileViewModel()
     @State private var navigateToEditProfile = false
     @State private var isFollowing = false
+    @State private var isReported = false
+    @State private var reportUserStatus = "Report user"
     var userId: String
     
     var body: some View {
@@ -128,14 +130,24 @@ struct User_ViewProfile: View {
                                         .fill(Color.black)
                                 )
                                 .padding(.horizontal)
-                        }.background(
-                            NavigationLink(
-                                destination: User_EditProfilePage(),
-                                isActive: $navigateToEditProfile,
-                                label: { EmptyView() }
-                            )
-                        )
+                        }
                     }
+                    
+                    Button {
+                        reportUser()
+                    } label: {
+                        Text(isReported ? "User reported" : reportUserStatus)
+                            .foregroundColor(.white)
+                            .font(.system(size: 16))
+                            .bold()
+                            .frame(maxWidth: 120, maxHeight: 20)
+                            .padding()
+                            .background(
+                                RoundedRectangle(cornerRadius: 24)
+                                    .fill(Color.black)
+                            )
+                            .padding(.horizontal)
+                    }.disabled(isReported)
                     
                     VStack(alignment: .leading) {
                         ForEach(postViewModel.postList) { post in
@@ -174,6 +186,7 @@ struct User_ViewProfile: View {
             checkFollowStatus()
             userViewModel.fetchUser(userId: userId)
             postViewModel.fetchProfileData(userId: userId)
+            checkReportStatus()
         }.navigationBarBackButtonHidden(true)
     }
     
@@ -213,7 +226,53 @@ struct User_ViewProfile: View {
             }
         }
     }
+    
+    private func reportUser(){
+        let reportUserRef = Database.database().reference().child("reportedUsers")
+        let reportId = reportUserRef.childByAutoId().key
+        
+        guard let currentUserId = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
+        let reportUserInfo: [String: Any]=[
+            "reportId": reportId ?? "Unknown",
+            "userId": userId,
+            "userReportingId": currentUserId
+        ]
+        
+        if let reportId = reportId {
+            reportUserRef.child(reportId).setValue(reportUserInfo){error, _ in
+                isReported = true
+            }
+        }
+    }
+    
+    private func checkReportStatus(){
+        guard let currentUserId = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
+        let reportUserRef = Database.database().reference().child("reportedUsers").queryOrdered(byChild: "userReportingId")
+            .queryEqual(toValue: currentUserId)
+        
+        reportUserRef.observeSingleEvent(of: .value) {snapshot in
+            var reported = false
+            
+            if snapshot.exists(), let reports = snapshot.value as? [String: [String: Any]]{
+                for report in reports.values {
+                    if let reportedUserId = report["userId"] as? String, reportedUserId == userId{
+                        reported = true
+                        break
+                    }
+                }
+            }
+            
+            DispatchQueue.main.async {
+                isReported = reported
+                reportUserStatus = reported ? "Reported" : "Report user"
+            }
+        }
+
+    }
 }
-//#Preview {
-  //  User_ViewProfile()
-//}
