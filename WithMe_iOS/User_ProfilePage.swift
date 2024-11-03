@@ -126,7 +126,7 @@ struct User_ProfilePage: View {
                         if(postViewModel.postList.isEmpty){
                             Text("No posts available.").foregroundColor(.gray).padding()
                         } else {
-                            ForEach(postViewModel.postList) { post in
+                            ForEach(postViewModel.postList, id: \.postId) { post in
                                 NavigationLink(destination: User_PostView(
                                     postId: post.postId,
                                     userId: post.userId,

@@ -99,7 +99,7 @@ struct Admin_ViewProfile: View {
                     
                     HStack{
                         NavigationLink(
-                            destination: TabView_WithMe())
+                            destination: Admin_TabView())
                         {
                             Text("Back")
                                 .foregroundColor(.white)
@@ -128,13 +128,7 @@ struct Admin_ViewProfile: View {
                                         .fill(Color.black)
                                 )
                                 .padding(.horizontal)
-                        }.background(
-                            NavigationLink(
-                                destination: User_EditProfilePage(),
-                                isActive: $navigateToEditProfile,
-                                label: { EmptyView() }
-                            )
-                        )
+                        }
                     }
                     HStack{
                         Button{
@@ -156,7 +150,7 @@ struct Admin_ViewProfile: View {
                     
                     VStack(alignment: .leading) {
                         ForEach(postViewModel.postList) { post in
-                            NavigationLink(destination: User_PostView(
+                            NavigationLink(destination: Admin_PostView(
                                 postId: post.postId,
                                 userId: post.userId,
                                 name: post.name,
@@ -168,7 +162,7 @@ struct Admin_ViewProfile: View {
                                 location: post.location,
                                 content: post.content
                             )) {
-                                User_PostPartialView(
+                                Admin_PostPartialView(
                                     postId: post.postId,
                                     userId: post.userId,
                                     name: post.name,

@@ -1,15 +1,15 @@
 //
-//  Post_ProfileViewModel.swift
+//  Admin_PostProfileViewModel.swift
 //  WithMe_iOS
 //
-//  Created by user264550 on 10/7/24.
+//  Created by user264550 on 11/3/24.
 //
 
 import SwiftUI
 import FirebaseDatabase
 
 
-class Post_ProfileViewModel: ObservableObject {
+class Admin_PostProfileViewModel: ObservableObject {
     @Published var name: String = ""
     @Published var postList: [Post] = []
     
@@ -17,7 +17,7 @@ class Post_ProfileViewModel: ObservableObject {
     
     func fetchProfileData(userId: String) {
         self.postList = []
-        reference.child("users").child(userId).observeSingleEvent(of: .value) { snapshot in
+        reference.child("admin").child(userId).observeSingleEvent(of: .value) { snapshot in
             guard let value = snapshot.value as? [String: Any] else {
                 print("Failed to fetch user profile data")
                 return
@@ -27,7 +27,7 @@ class Post_ProfileViewModel: ObservableObject {
             }
         }
         
-        reference.child("users").child(userId).child("posts").observeSingleEvent(of: .value) { snapshot in
+        reference.child("admin").child(userId).child("posts").observeSingleEvent(of: .value) { snapshot in
             var posts: [Post] = []
             if let postsDictionary = snapshot.value as? [String: Any] {
                 for (postId, postValue) in postsDictionary {

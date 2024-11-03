@@ -1,15 +1,14 @@
 //
-//  CommentsViewModel.swift
+//  Admin_CommentViewModel.swift
 //  WithMe_iOS
 //
-//  Created by user264550 on 10/13/24.
+//  Created by user264550 on 11/3/24.
 //
+
 import Foundation
 import FirebaseDatabase
 
-// Dict refers to a swift dictionary, similar to map<key, value> in android, i am using dict here but in the other codes i used dictionary to be easier to identify
-
-class CommentsViewModel: ObservableObject {
+class Admin_CommentsViewModel: ObservableObject {
     @Published var comments: [Comment] = []
     @Published var commentsNumber: Int = 0
     private var reference: DatabaseReference = Database.database().reference()
