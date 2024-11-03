@@ -192,6 +192,7 @@ struct Admin_ViewProfile: View {
             userViewModel.fetchUser(userId: userId)
             postViewModel.fetchProfileData(userId: userId)
         }.navigationBarBackButtonHidden(true)
+            .navigationBarHidden(true)
     }
     private func changeFollowStatus(){
         guard let currentUserId = Auth.auth().currentUser?.uid else {
