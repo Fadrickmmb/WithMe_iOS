@@ -65,7 +65,7 @@ struct User_ProfilePage: View {
                         .padding().fixedSize(horizontal: true, vertical: false)
                     
                     HStack {
-                       NavigationLink(destination: User_Followers(currentUserId: currentUserId)){
+                        NavigationLink(destination: User_Followers(currentUserId: currentUserId)){
                             VStack {
                                 Text("\(userViewModel.user?.followers.count ?? 0)")
                                     .font(.custom("DMSerifDisplay-Regular", size: 22))
@@ -126,7 +126,7 @@ struct User_ProfilePage: View {
                         if(postViewModel.postList.isEmpty){
                             Text("No posts available.").foregroundColor(.gray).padding()
                         } else {
-                            ForEach(postViewModel.postList, id: \.postId) { post in
+                            ForEach(postViewModel.postList) { post in
                                 NavigationLink(destination: User_PostView(
                                     postId: post.postId,
                                     userId: post.userId,
@@ -135,7 +135,7 @@ struct User_ProfilePage: View {
                                     userPhotoUrl: post.userPhotoUrl,
                                     postDate: post.postDate,
                                     yummys: post.yummys,
-                                    commentsNumber: post.commentsNumber,
+                                    comments: post.commentsNumber,
                                     location: post.location,
                                     content: post.content
                                 )) {
@@ -147,8 +147,8 @@ struct User_ProfilePage: View {
                                         userPhotoUrl: post.userPhotoUrl,
                                         postDate: post.postDate,
                                         yummys: post.yummys,
-                                        location: post.location,
-                                        commentsNumber: post.commentsNumber
+                                        comments: post.commentsNumber,
+                                        location: post.location
                                     )
                                 }
                             }

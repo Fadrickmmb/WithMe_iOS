@@ -1,10 +1,3 @@
-//
-//  Mod_EditProfilePage.swift
-//  WithMe_iOS
-//
-//  Created by user264550 on 11/3/24.
-//
-
 import SwiftUI
 import Firebase
 import FirebaseStorage

@@ -7,11 +7,10 @@
 import Foundation
 import FirebaseDatabase
 
-// Dict refers to a swift dictionary, similar to map<key, value> in android, i am using dict here but in the other codes i used dictionary to be easier to identify
+// Dict refers to a swift dictionary, similar to map<key, value> in android
 
 class CommentsViewModel: ObservableObject {
     @Published var comments: [Comment] = []
-    @Published var commentsNumber: Int = 0
     private var reference: DatabaseReference = Database.database().reference()
 
     func fetchComments(userId: String, postId: String) {
@@ -20,9 +19,6 @@ class CommentsViewModel: ObservableObject {
 
             guard snapshot.childrenCount > 0 else {
                 print("No comments found.")
-                DispatchQueue.main.async {
-                    self.commentsNumber = 0
-                }
                 return
             }
 
@@ -50,7 +46,6 @@ class CommentsViewModel: ObservableObject {
             
             DispatchQueue.main.async {
                 self.comments = fetchedComments
-                self.commentsNumber = fetchedComments.count
             }
         }
     }

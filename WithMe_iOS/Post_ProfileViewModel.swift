@@ -7,7 +7,7 @@
 
 import SwiftUI
 import FirebaseDatabase
-
+import Firebase
 
 class Post_ProfileViewModel: ObservableObject {
     @Published var name: String = ""
@@ -16,7 +16,6 @@ class Post_ProfileViewModel: ObservableObject {
     private var reference: DatabaseReference = Database.database().reference()
     
     func fetchProfileData(userId: String) {
-        self.postList = []
         reference.child("users").child(userId).observeSingleEvent(of: .value) { snapshot in
             guard let value = snapshot.value as? [String: Any] else {
                 print("Failed to fetch user profile data")
@@ -27,21 +26,23 @@ class Post_ProfileViewModel: ObservableObject {
             }
         }
         
-        reference.child("users").child(userId).child("posts").observeSingleEvent(of: .value) { snapshot in
+        reference.child("users").child(userId).child("posts").observe(.value) { snapshot in
             var posts: [Post] = []
-            if let postsDictionary = snapshot.value as? [String: Any] {
-                for (postId, postValue) in postsDictionary {
-                    if let postDictionary = postValue as? [String: Any] {
-                        let userId = postDictionary["userId"] as? String ?? ""
-                        let name = postDictionary["name"] as? String ?? ""
-                        let postImageUrl = postDictionary["postImageUrl"] as? String ?? ""
-                        let userPhotoUrl = postDictionary["userPhotoUrl"] as? String ?? ""
-                        let yummys = postDictionary["yummys"] as? Int ?? 0
-                        let location = postDictionary["location"] as? String ?? ""
-                        let postDate = postDictionary["postDate"] as? String ?? ""
-                        let commentsNumber = postDictionary["commentsNumber"] as? Int ?? 0
-                        let content = postDictionary["content"] as? String ?? ""
-                        
+            for child in snapshot.children {
+                if let childSnapshot = child as? DataSnapshot,
+                   let postDictionary = childSnapshot.value as? [String: Any] {
+                    let postId = postDictionary["postId"] as? String ?? ""
+                    let userId = postDictionary["userId"] as? String ?? ""
+                    let name = postDictionary["name"] as? String ?? ""
+                    let postImageUrl = postDictionary["postImageUrl"] as? String ?? ""
+                    let userPhotoUrl = postDictionary["userPhotoUrl"] as? String ?? ""
+                    let yummys = postDictionary["yummys"] as? Int ?? 0
+                    let location = postDictionary["location"] as? String ?? ""
+                    let postDate = postDictionary["postDate"] as? String ?? ""
+                    let commentsNumber = postDictionary["commentNumbers"] as? Int ?? 0
+                    let content = postDictionary["content"] as? String ?? ""
+                    
+                    if (!postId.isEmpty) {
                         let post = Post(
                             postId: postId,
                             userId: userId,
@@ -52,21 +53,16 @@ class Post_ProfileViewModel: ObservableObject {
                             location: location,
                             postDate: postDate,
                             commentsNumber: commentsNumber,
-                            content: content
+                            content: content,
+                            latitude: 0.0,
+                            longitude: 0.0
                         )
                         posts.append(post)
-                        print("Loaded post: \(postId) - \(name)")
-                    } else {
-                        print("Failed to cast postValue to [String: Any] for postId: \(postId)")
                     }
                 }
-            } else {
-                print("Failed to cast snapshot.value to [String: Any]")
             }
-            
             DispatchQueue.main.async {
                 self.postList = posts
-                print("Total posts loaded: \(self.postList.count)")
             }
         }
     }

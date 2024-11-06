@@ -18,19 +18,13 @@ struct User_PostView: View {
     var userPhotoUrl: String
     var postDate: String
     var yummys: Int
-    var commentsNumber: Int
+    var comments: Int
     var location: String
     var content: String
     @StateObject var commentViewModel = CommentsViewModel()
-    @State private var loggedUserName: String = ""
     @State private var currentUserId: String = ""
     @State private var showCommentDialog = false
     @State private var commentText: String = ""
-    @State private var showReportCommentDialog = false
-    @State private var selectedCommentId: String = ""
-    @State private var selectedCommentOwnerId: String = ""
-    @State private var showAlert = false
-    @State private var alertMessage = ""
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -56,9 +50,9 @@ struct User_PostView: View {
                         if let url = URL(string: userPhotoUrl), !userPhotoUrl.isEmpty {
                             AsyncImage(url: url) { image in
                                 image.resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 50, height: 50)
-                                    .clipShape(Circle())
+                                     .aspectRatio(contentMode: .fill)
+                                     .frame(width: 50, height: 50)
+                                     .clipShape(Circle())
                             } placeholder: {
                                 Image(systemName: "person.fill")
                                     .resizable()
@@ -73,7 +67,7 @@ struct User_PostView: View {
                                 .frame(width: 50, height: 50)
                                 .clipShape(Circle())
                         }
-                        
+
                         VStack(alignment: .leading) {
                             Text(name)
                                 .font(.custom("DMSerifDisplay-Regular", size: 20))
@@ -86,13 +80,13 @@ struct User_PostView: View {
                         Spacer()
                     }
                     .padding(.vertical, 5)
-                    
+
                     if let imageUrl = URL(string: postImageUrl), !postImageUrl.isEmpty {
                         AsyncImage(url: imageUrl) { image in
                             image.resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(maxHeight: 250)
-                                .clipped()
+                                 .aspectRatio(contentMode: .fill)
+                                 .frame(maxHeight: 250)
+                                 .clipped()
                         } placeholder: {
                             Image(systemName: "camera")
                                 .resizable()
@@ -105,7 +99,7 @@ struct User_PostView: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 50, height: 50)
                     }
-                    
+
                     HStack {
                         HStack {
                             Image("withme_yummy")
@@ -114,19 +108,19 @@ struct User_PostView: View {
                             Text("\(yummys)")
                                 .font(.system(size: 12))
                         }
-                        
+
                         Spacer()
-                        
+
                         HStack {
                             Image("withme_comment")
                                 .resizable()
                                 .frame(width: 25, height: 25)
-                            Text("\(commentViewModel.commentsNumber)")
+                            Text("\(comments)")
                                 .font(.system(size: 12))
                         }
-                        
+
                         Spacer()
-                        
+
                         Text(postDate)
                             .font(.system(size: 12))
                     }
@@ -141,32 +135,20 @@ struct User_PostView: View {
                     } else {
                         VStack(alignment: .leading) {
                             ForEach(commentViewModel.comments) {comment in
-                                HStack{
-                                    VStack(alignment: .leading){
-                                        HStack {
-                                            Text(comment.name)
-                                                .fontWeight(.bold)
-                                                .font(.system(size: 16))
-                                                .padding(.trailing, 10)
-                                            Text(comment.date)
-                                                .font(.system(size: 16))
-                                        }
-                                        Text(comment.text)
+                                VStack(alignment: .leading){
+                                    HStack {
+                                        Text(comment.name)
+                                            .fontWeight(.bold)
                                             .font(.system(size: 16))
-                                            .padding(.bottom,5)
+                                            .padding(.trailing, 10)
+                                        Text(comment.date)
+                                            .font(.system(size: 16))
                                     }
-                                    
-                                    Spacer()
-                                    
-                                    VStack(alignment: .leading){
-                                        Image(systemName: "exclamationmark.triangle")
-                                    }.padding(.horizontal,5)
-                                        .onTapGesture {
-                                            selectedCommentId = comment.commentId
-                                            selectedCommentOwnerId = comment.userId
-                                            showReportCommentDialog = true
-                                        }
+                                    Text(comment.text)
+                                        .font(.system(size: 16))
+                                        .padding(.bottom,5)
                                 }
+                                    
                             }.padding(.top, 10)
                         }.padding(0)
                     }
@@ -203,33 +185,19 @@ struct User_PostView: View {
                                 )
                                 .padding(.horizontal)
                         }.buttonStyle(PlainButtonStyle()).padding()
-                    }
+                       }
                 }.onAppear{
                     if let user = Auth.auth().currentUser{
                         currentUserId = user.uid
                         commentViewModel.fetchComments(userId: userId, postId: postId)
-                        let userRef = Database.database().reference()
-                        userRef.child("users").child(currentUserId).observeSingleEvent(of: .value) {snapshot in
-                            if let userInfo = snapshot.value as? [String: Any],
-                               let name = userInfo["name"] as? String{
-                                loggedUserName = name
-                            }
-                        }
                     }
                 }.navigationBarBackButtonHidden(true)
-                .navigationBarHidden(true)
-                .sheet(isPresented: $showCommentDialog) {
+                    .navigationBarHidden(true)
+                 .sheet(isPresented: $showCommentDialog) {
                     CommentDialog(commentText: $commentText, isShowing: $showCommentDialog, buttonTitle: "Comment"){
-                        addComment()
-                    }
-                }.sheet(isPresented: $showReportCommentDialog) {
-                    ReportCommentDialog(buttonTitle: "REPORT", action: { _ in
-                        reportComment(commentId: selectedCommentId, commentOwnerId: selectedCommentOwnerId)
-                    }, userId: userId, postId: postId, isShowing: $showReportCommentDialog)
-                }
-                .alert(isPresented: $showAlert) {
-                    Alert(title: Text("ReportStatus"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
-                }            }
+                    addComment()
+                        }
+                 }            }
         }.padding(.leading,10)
          .padding(.trailing,10)
     }
@@ -242,7 +210,7 @@ struct User_PostView: View {
         let commentId = UUID().uuidString
         let date = DateFormatter.localizedString(from: Date(), dateStyle: .medium, timeStyle: .short)
         let comment = Comment(
-            name: loggedUserName,
+            name: name,
             text: commentText,
             date: date,
             userId: currentUserId,
@@ -262,35 +230,5 @@ struct User_PostView: View {
         commentViewModel.fetchComments(userId: userId, postId: postId)
         commentText = ""
         showCommentDialog = false
-    }
-    
-    func reportComment(commentId: String, commentOwnerId: String){
-        let reportCommentRef = Database.database().reference().child("reportedComments")
-        let reportId = reportCommentRef.childByAutoId().key
-        
-        guard let reportId = reportId, let loggedUserId = Auth.auth().currentUser?.uid else{
-            alertMessage = "Error reporting comment."
-            showAlert = true
-            return
-        }
-        
-        let reportCommentInfo: [String: Any] = [
-            "reportId": reportId,
-            "postId": postId,
-            "commentId": commentId,
-            "postOwnerId": userId,
-            "commentOwnerId": commentOwnerId,
-            "userReportingId": loggedUserId
-        ]
-        
-        reportCommentRef.child(reportId).setValue(reportCommentInfo){error, _ in
-            if let error = error {
-                alertMessage = "Error reporting comment: \(error.localizedDescription)"
-                showAlert = true
-            } else {
-                alertMessage = "Comment reported successfully."
-                showAlert = true
-            }
-        }
     }
 }

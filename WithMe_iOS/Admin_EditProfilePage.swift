@@ -2,7 +2,7 @@
 //  Admin_EditProfilePage.swift
 //  WithMe_iOS
 //
-//  Created by user264550 on 11/3/24.
+//  Created by Midhun on 30/10/24.
 //
 
 import SwiftUI
@@ -159,7 +159,7 @@ struct Admin_EditProfilePage: View {
                         isActive: $isLoggedOut,
                         label: { EmptyView() }
                     )
-                    NavigationLink(destination: Admin_ProfilePage(), isActive: $navigateToUserProfile,
+                    NavigationLink(destination: User_ProfilePage(), isActive: $navigateToUserProfile,
                     label: {EmptyView()})
                 }
 
@@ -285,7 +285,7 @@ struct Admin_EditProfilePage: View {
             return
         }
 
-        let storageRef = Storage.storage().reference().child("user_profile_pictures/\(user?.uid ?? UUID().uuidString).jpg")
+        let storageRef = Storage.storage().reference().child("admin_profile_pictures/\(user?.uid ?? UUID().uuidString).jpg")
 
         storageRef.putData(imageData, metadata: nil) { _, error in
             guard error == nil else {

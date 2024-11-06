@@ -20,8 +20,11 @@ struct Post: Identifiable, Codable {
     var postDate: String
     var commentsNumber: Int
     var content: String
+    var latitude: Double
+    var longitude: Double
+
     
-    init(postId: String, userId: String, name: String, postImageUrl: String, userPhotoUrl: String, yummys: Int, location: String, postDate: String, commentsNumber: Int, content: String) {
+    init(postId: String, userId: String, name: String, postImageUrl: String, userPhotoUrl: String, yummys: Int, location: String, postDate: String, commentsNumber: Int, content: String, latitude: Double, longitude: Double) {
         self.postId = postId
         self.userId = userId
         self.name = name
@@ -32,5 +35,7 @@ struct Post: Identifiable, Codable {
         self.postDate = postDate
         self.commentsNumber = commentsNumber
         self.content = content
+        self.latitude = latitude
+        self.longitude = longitude
     }
 }

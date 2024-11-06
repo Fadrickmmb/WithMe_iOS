@@ -3,7 +3,7 @@ import FirebaseDatabase
 import FirebaseAuth
 import Firebase
 
-struct Admin_PostView: View {
+struct PostView: View {
     var post: Post
     @State private var showChangePostDialog = false
     @State private var yummysCount: Int
@@ -28,7 +28,7 @@ struct Admin_PostView: View {
                     .font(.subheadline)
                     .foregroundColor(.gray)
                     .onTapGesture {
-                        onLocationTap()
+                        onLocationTap() 
                     }
             }
 
@@ -86,7 +86,7 @@ struct Admin_PostView: View {
         }
         
         let postRef = Database.database().reference()
-            .child("admin")
+            .child("users")
             .child(post.userId)
             .child("posts")
             .child(post.postId)
@@ -128,7 +128,7 @@ struct Admin_PostView: View {
         }
         
         let postRef = Database.database().reference()
-            .child("admin")
+            .child("users")
             .child(post.userId)
             .child("posts")
             .child(post.postId)

@@ -17,8 +17,6 @@ struct Auth_LoginView: View {
     @State private var isAdmin: Bool = false
     @State private var navigateToAdmin: Bool = false
     @State private var navigateToUser: Bool = false
-    @State private var navigateToMod: Bool = false
-    @State private var navigateToSusp: Bool = false
     @State private var userId: String?
 
     var body: some View {
@@ -51,8 +49,6 @@ struct Auth_LoginView: View {
                     .padding(.vertical, 10)
                     .cornerRadius(5)
                 
-                
-
                 NavigationLink(destination: Auth_ForgotPasswordView()) {
                     Text("Forgot Pasword?")
                         .font(.system(size: 16))
@@ -77,8 +73,7 @@ struct Auth_LoginView: View {
                         .padding(.top, 10)
                         .padding(.horizontal, 50)
                 }
-                
-                
+    
                 NavigationLink(destination: Auth_RegisterView()) {
                     Text("Don't Have an Account?\nRegister Here")
                         .multilineTextAlignment(.center)
@@ -92,16 +87,10 @@ struct Auth_LoginView: View {
 
 
                
-                NavigationLink(destination: Admin_TabView(), isActive: $navigateToAdmin) {
-                    EmptyView()
-                }
-                NavigationLink(destination: Mod_TabView(), isActive: $navigateToMod){
+                NavigationLink(destination: TabView_WithMe(), isActive: $navigateToAdmin) {
                     EmptyView()
                 }
                 NavigationLink(destination: TabView_WithMe(), isActive: $navigateToUser) {
-                    EmptyView()
-                }
-                NavigationLink(destination: User_SuspensionPage(), isActive: $navigateToSusp) {
                     EmptyView()
                 }
             }.navigationBarBackButtonHidden(true)
@@ -109,7 +98,6 @@ struct Auth_LoginView: View {
         }
     }
 
-    
     func loginUser() {
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
             if let error = error {
@@ -129,36 +117,16 @@ struct Auth_LoginView: View {
             if snapshot.exists() {
                 navigateToAdmin = true
             } else {
-                dbRef.child("mod").queryOrdered(byChild: "email").queryEqual(toValue: email).observeSingleEvent(of: .value) { snapshot in
+                dbRef.child("users").queryOrdered(byChild: "email").queryEqual(toValue: email).observeSingleEvent(of: .value) { snapshot in
                     if snapshot.exists() {
-                        navigateToMod = true
+                        navigateToUser = true
                     } else {
-                        dbRef.child("users").queryOrdered(byChild: "email").queryEqual(toValue: email).observeSingleEvent(of: .value) { snapshot in
-                            if snapshot.exists(), let userSnapshot = snapshot.children.allObjects.first as? DataSnapshot {
-                                if let userId = userSnapshot.childSnapshot(forPath: "id").value as? String {
-                                    dbRef.child("suspendedUsers").child(userId).observeSingleEvent(of: .value) { suspendedSnapshot in
-                                        if suspendedSnapshot.exists() {
-                                            navigateToSusp = true
-                                        } else {
-                                            navigateToUser = true
-                                        }
-                                    }
-                                } else {
-                                    loginError = "User ID not found"
-                                }
-                            } else {
-                                loginError = "User not found"
-                            }
-                        }
+                        loginError = "User not found"
                     }
                 }
             }
         }
     }
-
-
-
-
 }
 
 #Preview {
